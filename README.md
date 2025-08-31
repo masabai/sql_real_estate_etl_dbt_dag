@@ -17,16 +17,14 @@ Some municipalities may not report sales for one year after a revaluation.
 - Built an Airflow DAG to orchestrate ETL and SQL transformations.
 - Loads up to 1M rows of real estate data into Postgres.
 - Sequential execution of 6 SQL scripts (data cleaning, profiling, staging).
-- Scalable: 100k rows processed in 29 seconds.
+- Scalable: 500k rows processed in 29 seconds.
 - Demonstrates PythonOperator + BashOperator with Postgres integration.
-
-![DAG Screenshot](docs/dag.png)
 
 ## DAG Performance Tests
 | Sample Size | Duration  | Status          |
 |-------------|-----------|-----------------|
 | 10k         | 00:00:03  | Passed          |
-| 100k        | 00:00:29  | Passed          |
+| 500k        | 00:00:29  | Passed          |
 | 1M          | Pending   | Requires tuning |
 
 

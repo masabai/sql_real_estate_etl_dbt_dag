@@ -1,4 +1,4 @@
-REAL ESTATE SALES 2001–2022 (CONNECTICUT)
+# REAL ESTATE SALES 2001–2022 (CONNECTICUT)
 
 Metadata last updated: December 20, 2024
 Maintained by: Connecticut Office of Policy and Management

@@ -1,17 +1,29 @@
-# REAL ESTATE SALES 2001–2022 (CONNECTICUT)
+# Real Estate Sales ETL Pipeline (Connecticut, 2001–2022)
 
 Metadata last updated: December 20, 2024
 Maintained by: Connecticut Office of Policy and Management
 
 Covers all property sales ≥ $2,000 between October 1 and September 30 of each year.
 Includes: Town, Address, Date of Sale, Property Type, Sale Amount, Assessed Value, and related remarks.
-
 Governed by: Connecticut General Statutes §10-261a and §10-261b
 
 Annual sales are reported by Grand List year (Oct 1 → Sep 30).
 Some municipalities may not report sales for one year after a revaluation.
 
-# Real Estate ETL with Airflow + Postgres
+## Project Setup (High-Level)
+This project demonstrates a real estate sales ETL pipeline using **Airflow**, **dbt**, and **Postgres**.
+
+- **Airflow** is run in a Docker container using **Docker Desktop**.  
+- **Postgres** is used as the local data warehouse (inside Docker).  
+- **DAGs** and **dbt models** are mounted from the local project directory:
+- **docker-compose.yml** is used to orchestrate Airflow, Postgres, and pgAdmin services.  
+- **Dockerfile** ensures dbt and Postgres adapter are installed so the environment is reproducible across container restarts.
+
+
+## Notes / Tips
+- Airflow containers do **not persist dbt installations** between restarts.  
+- Installing dbt via the Dockerfile guarantees dbt is always available without manual intervention.
+
 
 ## Highlights
 - Built an Airflow DAG to orchestrate ETL and SQL transformations.
@@ -45,14 +57,30 @@ Distinct Non-Use Codes	5
 Rows with Assessor Remarks	1,002
 Rows with OPM Remarks	2,235
 Rows with Location info	368
-KEY OBSERVATIONS
 
+KEY OBSERVATIONS
 Data completeness is strong for sale amount, date recorded, address.
 Categorical fields (property type, residential type) are populated but some values missing.
+Rows with Location info are limited → missing values are **not filled intentionally**
 Remarks fields are sparse (assessor, OPM) → not reliable for analysis.
 Sale amounts span $2,000 → $49M, avg just over $500k.
 
-ETL WORKFLOW (STEPS 1–6)
+## Project Phases
+
+**Phase I – SQL (Raw Data Cleaning & Exploration)**  
+- Data is loaded from CSV URLs into Postgres using **Python only for the loading step and DAG orchestration**.  
+- All cleaning, validation, and exploratory transformations are performed **exclusively in SQL**.  
+- Focus is on understanding the data, handling missing values, and generating baseline transformations without introducing additional tools.  
+
+**Phase II – dbt (Transformation & Modeling)**
+- Cleaning and transformations are **repeated and formalized in dbt models**.  
+- Focus is on building a **maintainable pipeline for production-ready marts** while leveraging dbt features, including:  
+  - `dbt seed`, `dbt run`, `dbt test` (default & custom tests), `dbt build`, `dbt docs`  
+  - Use of `refs` and `macros` for modular, reusable transformations  
+- **Note:** Snapshot feature is skipped because the data lacks reliable timestamps and to avoid altering government-provided data excessively.
+
+
+### PHASE I ETL WORKFLOW (STEPS 1–6)
 
 STEP 0: Load CSV to Postgres
 Raw dataset (~1M rows) downloaded from official CT government source.
@@ -94,7 +122,7 @@ Script: 05_data_cleaning.sql
 STEP 6: Exploratory Data Analysis (EDA)
 Script: 06_eda.sql
 
-************************************  END OF SQL PROJECT   ************************************************************
+************************************  END OF PHASE I   ************************************************************
 
 DBT IMPLEMENTATION
 
@@ -106,11 +134,11 @@ DBT IMPLEMENTATION
 - Size: ~1.14M rows
 - Features: Town, Address, Date of Sale, Property Type, Sale Amount, Assessed Value, Remarks
 
-## ETL Workflow
-- Airflow DAG → Orchestrates extract & load into Postgres
-- SQL transformations → Cleaning, profiling, staging
-- dbt → Modular models (staging → intermediate → marts)
-- Performance tests: 100k rows processed in 29s
+## PHASE II ETL Workflow
+
+- **Airflow DAG** → Orchestrates the extract & load into the Airflow/Postgres DB; 
+- triggers **Phase II transformations** via the bash command:  
+  ```bash dbt build
 
 ## Data Model
 Implemented a **star schema** for analytical queries:
@@ -142,11 +170,13 @@ This model supports:
 - Applied dbt tests: `not_null`, `unique`, `accepted_values`
 
 ## Tech Stack
-- Airflow → ETL orchestration
-- Postgres → Data storage
-- dbt → Transformation, testing, documentation
-- Python → Data exploration, EDA, visualization
-- Future: PySpark/Databricks for scaling
+This project implements an **ETL workflow starting with extraction** and progressing through transformation and loading:  
+
+- **Airflow** → ETL orchestration, manages DAGs for extraction, transformation, and loading  
+- **Postgres** → Central data storage for raw and transformed datasets  
+- **dbt** → Transformation, testing, documentation, and building production-ready marts  
+- **Python** → Data exploration, initial CSV loading, EDA, and visualization  
+- **Future** → PySpark / Databricks for scaling to large datasets
 
 ## Next Steps
 - Scale dbt models to full dataset (1.14M rows)

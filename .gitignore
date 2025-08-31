@@ -3,6 +3,7 @@ dags/DockerDesktopWSL
 
 # Large datasets
 plugins/etl/large_file_million_rows.csv
+plugins/etl/sql_project.log
 
 # Misc tests
 archive/
@@ -25,6 +26,13 @@ dbt/real_estate_dbt/profiles.yml
 # virtual environments
 venv_airflow/
 __pycache__/
+
+# Misc file
+dbt/real_estate_dbt/models/sales_price_range.sql.wip
+dbt/real_estate_dbt/dbt_notes
+project_structure.py
+Real Estate Docker Mounting.txt
+more_test.txt
 
 # OS-specific
 .DS_Store

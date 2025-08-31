@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_town
+    description: Town dimension
+    columns:
+      - name: town_id
+        tests:
+          - not_null
+
+  - name: dim_property_type
+    description: Distinct Property Type
+    columns:
+      - name: property_type_id
+        tests:
+          - not_null
+          - dim_property_type_valid
+
+  - name: dim_residential_type
+    description: Distinct Residential Type
+    columns:
+      - name: residential_type_id
+        tests:
+          - not_null
+
+

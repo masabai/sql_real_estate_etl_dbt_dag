@@ -1,0 +1,86 @@
+Tips:
+
+Place the SQL files in tests/ (or models/tests/).
+
+Set thresholds as dbt variables in dbt_project.yml:
+version: 2
+
+models:
+  - name: staging_real_estate_clean
+    description: Cleaned staging table for real estate sales
+    columns:
+      - name: sale_amount
+        tests:
+          - not_null
+          - max_sale_amount
+      - name: assessed_value
+        tests:
+          - not_null
+          - max_assessed_value
+      - name: property_type
+        tests:
+          - not_null
+          - property_type_valid
+      - name: date_recorded
+        tests:
+          - not_null
+          - date_recorded_range
+
+    tests:
+      - town_sales_ratio
+      - max_sales_ratio
+
+
+
+max_sale_amount.sql
+select *
+from {{ ref('staging_real_estate_clean') }}
+where sale_amount > {{ var('max_sale_threshold', 50000000) }}
+
+-- tests/max_assessed_value.sql
+select *
+from {{ ref('staging_real_estate_clean') }}
+where assessed_value > {{ var('max_assessed_threshold', 60000000) }}
+
+
+-- tests/max_sales_ratio.sql
+select *
+from {{ ref('staging_real_estate_clean') }}
+where sale_amount / NULLIF(assessed_value,0) > {{ var('max_sales_ratio', 5) }}
+
+
+-- tests/date_recorded_range.sql
+select *
+from {{ ref('staging_real_estate_clean') }}
+where date_recorded < '2001-10-01'
+   or date_recorded > current_date
+
+
+-- tests/property_type_valid.sql
+select *
+from {{ ref('staging_real_estate_clean') }}
+where property_type not in (
+    'Residential', 'Commercial', 'Vacant Land', 
+    'Industrial', 'Mixed Use', 'Agricultural'
+)
+
+
+-- tests/town_sales_ratio.sql
+with yearly_sales as (
+    select list_year,
+           town,
+           count(*) as town_sales
+    from {{ ref('staging_real_estate_clean') }}
+    group by list_year, town
+),
+yearly_totals as (
+    select list_year,
+           sum(town_sales) as total_sales
+    from yearly_sales
+    group by list_year
+)
+select y.list_year, y.town
+from yearly_sales y
+join yearly_totals t
+  on y.list_year = t.list_year
+where y.town_sales / t.total_sales > 0.2  -- towns with >20% of yearly sales

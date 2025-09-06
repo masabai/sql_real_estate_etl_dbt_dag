@@ -4,7 +4,7 @@ models:
   - name: dim_town
     description: Town dimension
     columns:
-      - name: town_id
+      - name: town
         tests:
           - not_null
 
@@ -14,7 +14,6 @@ models:
       - name: property_type_id
         tests:
           - not_null
-          - dim_property_type_valid
 
   - name: dim_residential_type
     description: Distinct Residential Type

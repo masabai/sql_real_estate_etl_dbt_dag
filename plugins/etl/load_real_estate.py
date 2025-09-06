@@ -11,14 +11,10 @@ CSV_URL = 'https://data.ct.gov/api/views/5mzw-sjtu/rows.csv?accessType=DOWNLOAD'
 RAW_CSV = 'large_file_million_rows.csv'
 SAMPLED_CSV = 'realestate_sales.csv'
 
-# Point to Local Postgres (PASSED - 2025-08-23 18:26:35,962)
-#DB_URI = 'postgresql+psycopg2://postgres:123@localhost:5432/postgres'
-
-# Point to Airflow DB, run from Pycham IDE (FAILED - no time to resolve, skip for now)
-#DB_URI = 'postgresql+psycopg2://airflow:airflow@host.docker.internal:5432/airflow'
 
 #Point to Airflow DB, trigger from Airflow UI
-DB_URI = 'postgresql+psycopg2://airflow:airflow@airflow_postgres:5432/airflow'
+#DB_URI = 'postgresql+psycopg2://airflow:airflow@airflow_postgres:5432/airflow' #docker airflow
+DB_URI = 'postgresql+psycopg2://airflow:airflow@localhost:6543/airflow' #local ide
 TABLE_NAME = 'real_estate'
 
 # --------------------------------------------------

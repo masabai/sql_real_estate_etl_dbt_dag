@@ -1,6 +1,7 @@
--- Distribution of sales over time
+
 {{ config(
-    materialized='table'
+    materialized='table',
+    description='Mart: Track market growth, sales over time'
 ) }}
 
 WITH sales_by_year AS (
@@ -12,6 +13,7 @@ WITH sales_by_year AS (
         ROUND(AVG(sale_amount::NUMERIC / NULLIF(assessed_value::NUMERIC,0)),2) AS avg_sales_ratio
     FROM {{ ref('fact_sales') }}
     GROUP BY list_year
+    ORDER BY list_year
 )
 SELECT *
 FROM sales_by_year

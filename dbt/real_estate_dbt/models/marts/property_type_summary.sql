@@ -1,7 +1,8 @@
 
--- Property type breakdown with running total
+
 {{ config(
-    materialized='table'
+    materialized='table',
+    description='Mart: Property type breakdown with running total'
 ) }}
 
 WITH prop_stats AS (

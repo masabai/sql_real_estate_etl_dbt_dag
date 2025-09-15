@@ -1,7 +1,0 @@
-postgres:
-  host: localhost
-  port: 6543
-  database: airflow
-  user: airflow
-  password: airflow
-  schema: staging

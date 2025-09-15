@@ -39,3 +39,4 @@ Recover_Deleted_Files.txt
 # OS-specific
 .DS_Store
 *.pyc
+config.yml

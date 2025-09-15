@@ -1,0 +1,10 @@
+2025-09-14 20:07:12,524 INFO: File 'large_file_million_rows.csv' already exists. Skipping download.
+2025-09-14 20:07:13,532 INFO: Saved first 100000 rows to realestate_sales.csv
+2025-09-14 20:07:13,669 INFO: Schemas 'staging' and 'clean' created or verified.
+2025-09-14 20:07:13,670 INFO: Dropped table if existed: staging.real_estate
+2025-09-14 20:07:24,024 INFO: Loaded 100000 rows into staging.real_estate
+2025-09-14 20:23:38,785 INFO: File 'large_file_million_rows.csv' already exists. Skipping download.
+2025-09-14 20:23:39,986 INFO: Saved first 100000 rows to realestate_sales.csv
+2025-09-14 20:23:40,128 INFO: Schemas 'staging' and 'clean' created or verified.
+2025-09-14 20:23:40,133 INFO: Dropped table if existed: staging.real_estate
+2025-09-14 20:23:48,226 INFO: Loaded 100000 rows into staging.real_estate

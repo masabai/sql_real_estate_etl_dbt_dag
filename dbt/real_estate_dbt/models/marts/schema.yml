@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: top_ten_towns
+    description: "Mart: Identify top or bottom properties quickly"
+    columns:
+      - name: town
+        description: "Town name for sales aggregation"
+      - name: sale_count
+        description: "Count of properties sold in the town"
+
+  - name: sales_flag_summary
+    description: "Mart: Property valuation breakdown by sales ratio"
+    columns:
+      - name: ratio_flag
+        description: "Category of property valuation: Under-valued, Fair, Over-valued"
+      - name: flag_count
+        description: "Number of properties in each category"
+      - name: pct
+        description: "Percentage of properties in each category"
+
+  - name: sales_over_time
+    description: "Mart: Running totals of property sales over time"
+    columns:
+      - name: list_year
+        description: "Year of listing"
+      - name: town
+        description: "Town of the property"
+      - name: running_total
+        description: "Cumulative number of sales up to that date"
+
+  - name: property_type_summary
+    description: "Mart: Summary of sales by property type"
+    columns:
+      - name: property_type
+        description: "Type of property"
+      - name: sale_count
+        description: "Number of sales for that type"
+
+  - name: compare_current_previous
+    description: "Mart: Compare current vs previous sales metrics"
+    columns:
+      - name: metric
+        description: "Sales metric being compared"
+      - name: current_value
+        description: "Value for the current period"
+      - name: previous_value
+        description: "Value for the previous period"
+      - name: diff
+        description: "Difference between current and previous values"

@@ -1,6 +1,7 @@
--- Top 10 towns by sales volume with ranking
+
 {{ config(
-    materialized='table'
+    materialized='table',
+    description='Mart: Identify top or bottom properties quickly'
 ) }}
 
 WITH town_stats AS (
@@ -19,3 +20,4 @@ WITH town_stats AS (
 SELECT *
 FROM town_stats
 WHERE town_rank <= 10
+

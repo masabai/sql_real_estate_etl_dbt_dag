@@ -11,14 +11,12 @@ Annual sales are reported by Grand List year (Oct 1 → Sep 30).
 Some municipalities may not report sales for one year after a revaluation.
 
 ## Project Setup (High-Level)
-This project demonstrates a real estate sales ETL pipeline using **Airflow**, **dbt**, and **Postgres**.
-
-- **Airflow** is run in a Docker container using **Docker Desktop**.  
-- **Postgres** is used as the local data warehouse (inside Docker).  
-- **DAGs** and **dbt models** are mounted from the local project directory:
-- **docker-compose.yml** is used to orchestrate Airflow, Postgres, and pgAdmin services.  
-- **Dockerfile** ensures dbt and Postgres adapter are installed so the environment is reproducible across container restarts.
-
+- This project demonstrates a real estate sales ETL pipeline using Airflow, dbt, and Postgres.
+- The pipeline is fully containerized using Docker, with services - orchestrated via docker-compose.
+- Airflow orchestrates the pipeline, dynamically fetching real estate sales data from a URL on data.gov at the start of each run.
+- Postgres is used as the local data warehouse (containerized within Docker).
+- The Airflow DAG is configured to send notifications to a designated Slack channel upon task failures, ensuring operational monitoring.
+- dbt models are run within the Airflow environment for robust data transformation and testing.
 
 ## Notes / Tips
 - Airflow containers do **not persist dbt installations** between restarts.  

@@ -1,0 +1,24 @@
+name: 'real_estate_dbt'
+version: '1.0.0'
+
+# Profile to use
+profile: 'real_estate_dbt'
+
+# Paths for different dbt objects
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+# Directories cleaned by `dbt clean`
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+models:
+  real_estate_dbt:     # matches project name
+    staging:           # folder inside models/, e.g., models/staging/
+      +materialized: view  # dbt will replace the view automatically

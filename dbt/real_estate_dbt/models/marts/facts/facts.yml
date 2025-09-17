@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: fact_sales
+    description: "Fact table containing property sales and assessment data, including calculated sales ratio."
+    columns:
+      - name: list_year
+        description: "Year the property was listed."
+        tests:
+          - not_null
+
+      - name: date_recorded
+        description: "Date the sale record was recorded."
+        tests:
+          - not_null
+
+      - name: town
+        description: "Town or municipality where the property is located."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_town')
+              field: town
+
+      - name: property_type_id
+        description: "Identifier for the type of property."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_property_type')
+              field: property_type_id
+
+      - name: residential_type_id
+        description: "Identifier for the residential type of property."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_residential_type')
+              field: residential_type_id
+
+      - name: sale_amount
+        description: "Sale price of the property."
+        tests:
+          - not_null
+          - sale_amount_positive
+
+      - name: assessed_value
+        description: "Assessed value of the property."
+        tests:
+          - not_null
+          - assessed_value_positive
+
+      - name: avg_sales_ratio
+        description: "Calculated ratio of sale_amount to assessed_value."
+        tests:
+          - sales_ratio_range

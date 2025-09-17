@@ -1,0 +1,89 @@
+version: 2
+
+models:
+  - name: stg_real_estate_clean # sql filename
+    description: "Cleaned view of raw real estate sales data from staging.real_estatesales"
+    columns:
+      - name: serial_number
+        description: "Unique serial number for each property"
+        data_tests:
+          - not_null
+
+      - name: list_year
+        description: "Year the property was listed"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [2001, 2020,2021]
+
+      - name: date_recorded
+        description: "Date the property was recorded"
+        data_tests:
+          - not_null
+
+      - name: assessed_value
+        description: "Assessed value of the property"
+        data_tests:
+          - not_null
+
+      - name: sale_amount
+        description: "Sale amount of the property"
+        data_tests:
+          - not_null
+
+      - name: sales_ratio
+        description: "Ratio of sale amount to assessed value"
+        data_tests:
+          - not_null
+
+      - name: town
+        description: "Town where the property is located"
+        data_tests:
+          - not_null
+
+      - name: address
+        description: "Property address"
+        data_tests:
+          - not_null
+
+      - name: property_type
+        description: "Type of the property"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Unknown"
+                - "Residential"
+                - "Public Utility"
+                - "Vacant Land"
+                - "Industrial"
+                - "Apartments"
+                - "Commercial"
+
+      - name: residential_type
+        description: "Residential subtype of the property"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Single Family"
+                - "Condo"
+                - "Unknown"
+                - "Four Family"
+                - "Two Family"
+                - "Three Family"
+
+      - name: non_use_code
+        description: "Non-use code of the property"
+        data_tests:
+          - not_null
+
+      - name: cleaned_remark
+        description: "Cleaned and standardized remarks"
+        data_tests:
+          - not_null
+
+      - name: location
+        description: "Geographic location information"
+
+

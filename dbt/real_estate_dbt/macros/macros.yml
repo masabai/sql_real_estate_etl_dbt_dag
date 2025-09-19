@@ -1,0 +1,57 @@
+version: 2
+
+macros:
+  - name: generate_schema_name
+    description: >
+      Macro to determine the schema name for a dbt model.
+      Uses the `+schema` config value if provided; otherwise, falls back to the target schema.
+      Arguments:
+        - custom_schema_name: the schema name provided via model config (`+schema`)
+        - node: the dbt model node (automatically passed by dbt)
+
+  - name: test_assessed_value_positive
+    description: >
+      Custom test macro to ensure that 'assessed_value' column in a model is always positive.
+      Arguments:
+        - model: the model to test
+        - column_name: the column to check
+
+  - name: test_sale_amount_positive
+    description: >
+      Custom test macro to ensure that 'sale_amount' column in a model is always positive.
+      Arguments:
+        - model: the model to test
+        - column_name: the column to check
+
+  - name: test_sales_ratio_range
+    description: >
+      Custom test macro to validate that 'avg_sales_ratio' values are within an expected range (e.g., 0 < ratio <= 2).
+      Arguments:
+        - model: the model to test
+        - column_name: the column to check
+
+  - name: clean_string
+    description: >
+      Macro to clean string columns by trimming white spaces and converting to title case.
+      Arguments:
+        - column_name: the column to clean
+
+  - name: clean_text
+    description: >
+      Macro to clean text columns by trimming white spaces and filling missing values with a default value.
+      Arguments:
+        - col_name: the column to clean
+        - default: value to fill if NULL or empty (default='Unknown')
+
+  - name: round_numeric
+    description: >
+        Macro to round numeric columns to the specified precision.
+        Arguments:
+        - col_name: the column to round
+        - precision: number of decimal places (default=2)
+
+  - name: clean_date
+    description: >
+        Macro to clean date columns by converting blank strings to NULL and casting to DATE.
+        Arguments:
+        - col_name: the column to clean

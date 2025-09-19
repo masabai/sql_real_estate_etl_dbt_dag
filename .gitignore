@@ -3,6 +3,7 @@ dags/DockerDesktopWSL
 
 # Large datasets
 plugins/large_file_million_rows.csv
+plugins/etl/large_file_million_rows.csv
 plugins/etl/sql_project.log
 
 # Misc tests

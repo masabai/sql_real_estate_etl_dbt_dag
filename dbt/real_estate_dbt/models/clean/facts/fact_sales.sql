@@ -1,10 +1,11 @@
+-- models/clean/clean_real_estate.sql
 {{ config(
     materialized='table'
 ) }}
 
 SELECT
     r.list_year,
-    4.date_recorded,
+    r.date_recorded,
     t.town,
     p.property_type_id,
     rt.residential_type_id,

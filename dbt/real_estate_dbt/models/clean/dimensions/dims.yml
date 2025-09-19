@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dim_town
+    description: "Town dimension table containing distinct towns associated with sales records."
+    columns:
+      - name: town
+        description: "Name of the town associated with sales records."
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_property_type
+    description: "Dimension table containing distinct property types used to classify real estate sales."
+    columns:
+      - name: property_type_id
+        description: "Unique identifier for each property type."
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_residential_type
+    description: "Dimension table containing distinct residential types used to categorize properties."
+    columns:
+      - name: residential_type_id
+        description: "Unique identifier for each residential type."
+        tests:
+          - not_null
+          - unique

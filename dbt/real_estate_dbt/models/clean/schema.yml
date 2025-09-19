@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: top_ten_towns
+    description: "Mart: Identify top or bottom properties quickly"
+    columns:
+      - name: town
+        description: "Town name for sales aggregation"
+      - name: sale_count
+        description: "Count of properties sold in the town"
+      - name: sales_count
+        description: "Number of property sales recorded for each town."
+      - name: avg_sale
+        description: "Average sale amount across properties in the town."
+      - name: avg_price_difference
+        description: "Average difference between the sale price and assessed value of properties in the town."
+      - name: avg_sales_ratio
+        description: "Average ratio of sale amount to assessed value, showing how much above or below assessment properties sell."
+      - name: town_rank
+        description: "Rank of the town by total number of sales, with 1 being the highest."
+
+  - name: sales_flag_summary
+    description: "Mart: Property valuation breakdown by sales ratio"
+    columns:
+      - name: ratio_flag
+        description: "Category of property valuation: Under-valued, Fair, Over-valued"
+      - name: flag_count
+        description: "Number of properties in each category"
+      - name: pct
+        description: "Percentage of properties in each category"
+
+  - name: sales_over_time
+    description: "Mart: Yearly sales statistics by town"
+    columns:
+        - name: list_year
+          description: "Year when the property was listed for sale."
+        - name: sales_count
+          description: "Number of property sales in the given year and town."
+        - name: avg_sale
+          description: "Average sale amount for properties in the given year and town."
+        - name: avg_price_difference
+          description: "Average difference between sale price and assessed value in the given year and town."
+        - name: avg_sales_ratio
+          description: "Average ratio of sale amount to assessed value in the given year and town."
+        - name: town
+          description: "Name of the town associated with the sales data."
+  - name: property_type_summary
+    description: "Mart: Property type breakdown with running total"
+    columns:
+        - name: property_type_id
+          description: "Unique identifier for the type of property."
+        - name: count
+          description: "Total number of sales for the given property type."
+        - name: avg_sale
+          description: "Average sale amount for properties of the given type."
+        - name: avg_price_difference
+          description: "Average difference between sale price and assessed value for properties of the given type."
+        - name: avg_sales_ratio
+          description: "Average ratio of sale amount to assessed value for properties of the given type."
+        - name: cumulative_count
+          description: "Running total of sales counts across property types, ordered from highest to lowest count."
+  - name: compare_current_previous
+    description: "Mart: Compare current vs previous sale and detect spikes or drops in property values"
+    columns:
+        - name: list_year
+          description: "Year when the property was listed for sale."
+        - name: date_recorded
+          description: "Date on which the property sale was recorded."
+        - name: town
+          description: "Town where the property is located."
+        - name: address
+          description: "Street address of the property."
+        - name: property_type
+          description: "Type or classification of the property (e.g., single-family, condo)."
+        - name: price_change
+          description: "Difference in sale amount compared to the previous sale of the same town, ordered by date."
+        - name: next_sale_price
+          description: "Sale amount of the next recorded transaction for the same town."

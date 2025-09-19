@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import logging
 import requests
@@ -11,28 +12,23 @@ import yaml
 CSV_URL = 'https://data.ct.gov/api/views/5mzw-sjtu/rows.csv?accessType=DOWNLOAD'
 RAW_CSV = 'large_file_million_rows.csv'
 SAMPLED_CSV = 'realestate_sales.csv'
-
-# YAML DB config file
-YML_FILE = "config.yml"
-
-# Default DB values (fallback)
-DB_HOST = "localhost"
-DB_PORT = 6543
-DB_NAME = "airflow"
-DB_USER = "airflow"
-DB_PASSWORD = "airflow"
 TABLE_NAME = 'real_estate_yml'
 
 # Read DB config from YAML safely
-if os.path.exists(YML_FILE):
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+YML_FILE = PROJECT_ROOT / "config.yml"
+
+if os.path.exists(str(YML_FILE)):
     with open(YML_FILE) as f:
         cfg = yaml.safe_load(f)
         pg = cfg.get("postgres", {})
-        DB_HOST = pg.get("host", DB_HOST)
-        DB_PORT = pg.get("port", DB_PORT)
-        DB_NAME = pg.get("database", DB_NAME)
-        DB_USER = pg.get("user", DB_USER)
-        DB_PASSWORD = pg.get("password", DB_PASSWORD)
+        DB_HOST = pg.get("host")
+        DB_PORT = pg.get("port")
+        DB_NAME = pg.get("database")
+        DB_USER = pg.get("user")
+        DB_PASSWORD = pg.get("password")
+else:
+    raise FileNotFoundError(f"DB config file '{YML_FILE}' not found!")
 
 DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

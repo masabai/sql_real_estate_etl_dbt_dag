@@ -38,12 +38,13 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:XXXXX@postgres/XXXXXX
     volumes:
-#      -  /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
-#      -  /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
+      -  /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
+      -  /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
       -  /mnt/c/PythonProject/RealEstate/dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
       -  /mnt/c/PythonProject/RealEstate/sql_project:/opt/airflow/projects/sql_project:cached
       -  /mnt/c/PythonProject/RealEstate/logs:/opt/airflow/logs:cached
       -  /mnt/c/PythonProject/RealEstate/plugins:/opt/airflow/plugins:cached
+      -  /mnt/c/PythonProject/RealEstate/config.yml:/opt/airflow/config.yml:cached
     ports:
       - "8081:8080"
     command: webserver
@@ -58,12 +59,14 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
     volumes:
- #     - /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
- #     - /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
+      - /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
+      - /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
       - /mnt/c/PythonProject/RealEstate/dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
       - /mnt/c/PythonProject/RealEstate/sql_project:/opt/airflow/projects/sql_project:cached
       - /mnt/c/PythonProject/RealEstate/logs:/opt/airflow/logs:cached
       - /mnt/c/PythonProject/RealEstate/plugins:/opt/airflow/plugins:cached
+      - /mnt/c/PythonProject/RealEstate/config.yml:/opt/airflow/config.yml:cached
+
     command: scheduler
 
   airflow-init:

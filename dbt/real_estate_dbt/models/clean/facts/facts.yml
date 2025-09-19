@@ -42,15 +42,18 @@ models:
         description: "Sale price of the property."
         tests:
           - not_null
+          # Custom test: ensure positive values
           - sale_amount_positive
 
       - name: assessed_value
         description: "Assessed value of the property."
         tests:
           - not_null
+          # Custom test: ensure positive values
           - assessed_value_positive
 
       - name: avg_sales_ratio
         description: "Calculated ratio of sale_amount to assessed_value."
         tests:
+          # Custom test: ratio should be in expected range
           - sales_ratio_range

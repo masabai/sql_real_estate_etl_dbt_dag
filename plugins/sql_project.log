@@ -1,5 +1,8 @@
-2025-09-14 21:08:39,833 INFO: Successfully downloaded CSV from https://data.ct.gov/api/views/5mzw-sjtu/rows.csv?accessType=DOWNLOAD
-2025-09-14 21:08:40,928 INFO: Saved first 100000 rows to realestate_sales.csv
-2025-09-14 21:08:41,053 INFO: Schemas 'staging' and 'clean' created or verified.
-2025-09-14 21:08:41,055 INFO: Dropped table if existed: staging.real_estate_yml
-2025-09-14 21:08:50,241 INFO: Loaded 100000 rows into staging.real_estate_yml
+2025-09-17 22:20:46,467 INFO: File 'large_file_million_rows.csv' already exists. Skipping download.
+2025-09-17 22:20:47,477 INFO: Saved first 100000 rows to realestate_sales.csv
+2025-09-17 22:20:47,483 ERROR: Pipeline failed: name 'DB_URI' is not defined
+2025-09-17 22:22:20,337 INFO: File 'large_file_million_rows.csv' already exists. Skipping download.
+2025-09-17 22:22:21,559 INFO: Saved first 100000 rows to realestate_sales.csv
+2025-09-17 22:22:21,742 INFO: Schemas 'staging' and 'clean' created or verified.
+2025-09-17 22:22:21,788 INFO: Dropped table if existed: staging.real_estate_yml
+2025-09-17 22:22:32,769 INFO: Loaded 100000 rows into staging.real_estate_yml

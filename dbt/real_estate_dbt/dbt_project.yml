@@ -22,3 +22,8 @@ models:
   real_estate_dbt:     # matches project name
     staging:           # folder inside models/, e.g., models/staging/
       +materialized: view  # dbt will replace the view automatically
+      +schema: staging
+    clean:
+      +materialized: table       # or view if you prefer
+      +schema: clean             # dbt will create tables/views in clean schema
+

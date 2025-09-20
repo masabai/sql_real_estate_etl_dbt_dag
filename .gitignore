@@ -5,6 +5,7 @@ dags/DockerDesktopWSL
 plugins/large_file_million_rows.csv
 plugins/etl/large_file_million_rows.csv
 plugins/etl/sql_project.log
+plugins/sql_project.log
 
 # Misc tests
 archive/

@@ -119,11 +119,11 @@ Script: 05_data_cleaning.sql
 STEP 6: Exploratory Data Analysis (EDA)
 Script: 06_eda.sql
 
-### PHASE II DBT IMPLEMENTATION
+## PHASE II DBT IMPLEMENTATION
 
-# Real Estate Sales ETL + Data Modeling
+### Real Estate Sales ETL + Data Modeling
 
-## Dataset
+### Dataset
 Same dataset as previously described (Connecticut Office of Policy and Management, property sales ≥ $2,000 from 2001–2022)
 
 ## PHASE II ETL Workflow

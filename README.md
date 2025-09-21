@@ -1,5 +1,11 @@
 # Real Estate Sales ETL Pipeline (Connecticut, 2001–2022)
 
+## Project Summary
+This project implements a mostly SQL/dbt ETL workflow on historical Connecticut real estate sales data (2001–2022), with Python only used for data ingestion and Airflow DAG orchestration.  
+It demonstrates staging, transformation, and modeling of data into fact and dimension tables, along with automated testing and validation.  
+A 10K sample seed is used for development, while the full dataset (~1M rows) is loaded for production-style ETL.
+
+## Data Source & Coverage
 Metadata last updated: December 20, 2024
 Maintained by: Connecticut Office of Policy and Management
 
@@ -35,8 +41,7 @@ This project demonstrates a real estate sales ETL pipeline using **Airflow**, **
 ### DAG Slack Notifications
 Both DAGs send success and failure messages to a Slack channel via SlackWebhookOperator.
 
-
-### INITIAL DATA ASSESSMENT (10K SAMPLE, POSTGRES)
+### Initial Data Assessment (10K Sample, POSTGRES)
 | Metric                     | Finding                     |
 | -------------------------- | --------------------------- |
 | Rows analyzed              | 10,000 (out of 1.14M total) |
@@ -55,10 +60,10 @@ Both DAGs send success and failure messages to a Slack channel via SlackWebhookO
 | Rows with OPM Remarks      | 2,235                       |
 | Rows with Location info    | 368                         |
 
-### KEY OBSERVATIONS
+### Key Observation
 Data completeness is strong for sale amount, date recorded, address.
 Categorical fields (property type, residential type) are populated but some values missing.
-Rows with Location info are limited → missing values are **not filled intentionally**
+Rows with Location info are limited → missing values, NULLs are **not filled intentionally**
 Remarks fields are sparse (assessor, OPM) → not reliable for analysis.
 Sale amounts span $2,000 → $49M, avg just over $500k.
 
@@ -119,9 +124,7 @@ Script: 05_data_cleaning.sql
 STEP 6: Exploratory Data Analysis (EDA)
 Script: 06_eda.sql
 
-## PHASE II DBT IMPLEMENTATION
-
-### Real Estate Sales ETL + Data Modeling
+## PHASE II DBT  (Transformation & Modeling)
 
 ### Dataset
 Same dataset as previously described (Connecticut Office of Policy and Management, property sales ≥ $2,000 from 2001–2022)
@@ -129,8 +132,16 @@ Same dataset as previously described (Connecticut Office of Policy and Managemen
 ### PHASE II ETL Workflow
 
 - **Airflow DAG** → Orchestrates the extract & load into the Airflow/Postgres DB; 
-- triggers **Phase II transformations** via the bash command:  
-  ```bash dbt build
+- triggers **Phase II transformations** via the bash command:
+  ```bash
+dbt build
+
+#### Model inspection:
+    ```bash
+dbt list       # lists all models that will be built
+dbt test       # runs all data tests on models
+dbt docs generate && dbt docs serve  # generate and view dbt documentation locally  
+`
 
 ## Data Model
 Implemented a **star schema** for analytical queries:
@@ -193,9 +204,21 @@ This project implements an ETL workflow starting with extraction and progressing
 - Slack → Channel integration for DAG success and failure notifications
 
 ## Documentation and Snapshots
-Project artifacts are stored under the docs and dbt directories:
+Project artifacts are stored under the `docs` and `dbt` directories:
 
-- docs/airflow_screenshots → Airflow DAG runs and orchestration flow
-- docs/dbt_docs_screenshots → dbt docs UI, lineage, and test results
-- docs/dbt_docs_screenshots → Entity-Relationship (ER) diagram of the star schema
-- dbt/real_estate_dbt/snapshots → dbt snapshot CSVs for marts (historical tracking of fact and dimension tables)
+- **docs/airflow_screenshots** → Airflow DAG runs and orchestration flow:
+  - [![Airflow DAG Screenshot](docs/airflow_screenshots/dbt_realestate_dag.png)](docs/airflow_screenshots/dbt_realestate_dag.png)
+  - [![Load & Explore DAG Screenshot](docs/airflow_screenshots/load_explore_dag.png)](docs/airflow_screenshots/load_explore_dag.png)
+
+- **docs/dbt_docs_screenshots** → dbt docs UI, lineage, test results, and ER diagram of the star schema:
+  - [![Entity-Relationship Diagram](docs/dbt_docs_screenshots/ER_diagram.png)](docs/dbt_docs_screenshots/ER_diagram.png)
+  - [![dbt Custom Test Screenshot](docs/dbt_docs_screenshots/dbt_custom_test.png)](docs/dbt_docs_screenshots/dbt_custom_test.png)
+  - [![dbt Fact Sales Screenshot](docs/dbt_docs_screenshots/dbt_fact_sales.png)](docs/dbt_docs_screenshots/dbt_fact_sales.png)
+  - [![dbt Test Run Set 1 Screenshot](docs/dbt_docs_screenshots/dbt_test_run_set1.png)](docs/dbt_docs_screenshots/dbt_test_run_set1.png)
+  - [![dbt Test Run Set 2 Screenshot](docs/dbt_docs_screenshots/dbt_test_run_set2.png)](docs/dbt_docs_screenshots/dbt_test_run_set2.png)
+
+- **dbt/real_estate_dbt/snapshots** → dbt snapshot CSVs for marts (historical tracking of fact and dimension tables):
+ - [Staging Real Estate Snapshot CSV](https://github.com/masabai/RealEstate/blob/master/dbt/real_estate_dbt/snapshots/dbt/staging_real_estate.csv)
+ - [Property Type Summary Snapshot CSV](https://github.com/masabai/RealEstate/blob/master/dbt/real_estate_dbt/snapshots/dbt/property_type_summary.csv)
+ - [Fact Sales Snapshot CSV](https://github.com/masabai/RealEstate/blob/master/dbt/real_estate_dbt/snapshots/dbt/fact_sales.csv)
+ - [Dim Property Type Snapshot CSV](https://github.com/masabai/RealEstate/blob/master/dbt/real_estate_dbt/snapshots/dbt/dim_property_type.csv)

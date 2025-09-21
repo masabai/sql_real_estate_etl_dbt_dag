@@ -11,10 +11,11 @@ SELECT
   is_nullable
 FROM information_schema.columns
 WHERE table_schema = 'staging'
---- AFTER DAG TEESTING, update table name accordingly staging.real_estate_dag
 
-  AND table_name = 'real_estate' --'real_estate'
+
+  AND table_name = 'real_estate'
 ORDER BY ordinal_position;
+
 -- Overview & data quality
 SELECT COUNT(*) AS total_rows,
        MIN("Date Recorded") AS earliest_recorded_date,
@@ -35,6 +36,5 @@ SELECT COUNT(*) AS total_rows,
        COUNT(*) FILTER (WHERE "Residential Type" IS NULL) AS missing_res_type,
        COUNT(*) FILTER (WHERE "Assessor Remarks" IS NOT NULL) AS with_assessor_remarks,
        COUNT(*) FILTER (WHERE "OPM remarks" IS NOT NULL) AS with_opm_remarks
-FROM staging.real_estate_dag;
---- AFTER DAG TEESTING, update table name accordingly staging.real_estate_dag
+FROM staging.real_estate;
 

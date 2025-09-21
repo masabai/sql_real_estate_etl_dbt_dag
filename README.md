@@ -24,20 +24,16 @@ This project demonstrates a real estate sales ETL pipeline using **Airflow**, **
 - Airflow containers do **not persist dbt installations** between restarts.  
 - Installing dbt via the Dockerfile guarantees dbt is always available without manual intervention.
 
-
 ## Highlights
-- Built an Airflow DAG to orchestrate ETL and SQL transformations.
-- Loads up to 1M rows of real estate data into Postgres.
+- Built Airflow DAGs to orchestrate ETL and SQL transformations:
+- load_real_estate_dag → loads raw real estate CSVs into Postgres.
+- load_explore_dag → executes sequential SQL scripts for exploration, cleaning, and staging.
+- dbt_realestate_dag → runs dbt build on the real_estate_dbt project inside Airflow.
 - Sequential execution of 6 SQL scripts (data cleaning, profiling, staging).
-- Scalable: 500k rows processed in 29 seconds.
-- Demonstrates PythonOperator + BashOperator with Postgres integration.
+- Demonstrates PythonOperator + BashOperator + Slack integration.
 
-## DAG Performance Tests
-| Sample Size | Duration  | Status          |
-|-------------|-----------|-----------------|
-| 10k         | 00:00:03  | Passed          |
-| 500k        | 00:00:29  | Passed          |
-| 1M          | Pending   | Requires tuning |
+### DAG Slack Notifications
+Both DAGs send success and failure messages to a Slack channel via SlackWebhookOperator.
 
 
 INITIAL DATA ASSESSMENT (10K SAMPLE, POSTGRES)
@@ -143,10 +139,10 @@ DBT IMPLEMENTATION
 ## Data Model
 Implemented a **star schema** for analytical queries:
 
-- **fact_sales**  
-  - sale_amount, assessed_value, sales_ratio  
-  - keys to dimension tables
-
+- **fact_sales**
+  - Measures: sale_amount, assessed_value, avg_sales_ratio  
+  - Keys: list_year, date_recorded, town, property_type_id, residential_type_id  
+  - Sources: stg_real_estate_clean joined with dim_town, dim_property_type, dim_residential_type
 - **dim_town**  
   - town_id, town_name
 
@@ -155,9 +151,6 @@ Implemented a **star schema** for analytical queries:
 
 - **dim_residential_type**  
   - residential_type_id, residential_type_name
-
-- **dim_date**  
-  - date_id, year, month, quarter, day_of_week
 
 This model supports:
 - Trend analysis by year, quarter
@@ -170,16 +163,10 @@ This model supports:
 - Applied dbt tests: `not_null`, `unique`, `accepted_values`
 
 ## Tech Stack
-This project implements an **ETL workflow starting with extraction** and progressing through transformation and loading:  
+This project implements an ETL workflow starting with extraction and progressing through transformation and loading:
 
-- **Airflow** → ETL orchestration, manages DAGs for extraction, transformation, and loading  
-- **Postgres** → Central data storage for raw and transformed datasets  
-- **dbt** → Transformation, testing, documentation, and building production-ready marts  
-- **Python** → Data exploration, initial CSV loading, EDA, and visualization  
-- **Future** → PySpark / Databricks for scaling to large datasets
-
-## Next Steps
-- Scale dbt models to full dataset (1.14M rows)
-- Add indexes on date, town, property_type
-- Deploy dbt docs & lineage
-- Build dashboards → sales trends, property mix
+- Airflow → ETL orchestration, manages DAGs for extraction, transformation, and loading
+- Postgres → Central data storage for raw and transformed datasets
+- dbt → Transformation, testing, documentation, and building production-ready marts
+- Python → Data exploration, initial CSV loading, EDA, and visualization
+- Slack → Channel integration for DAG success and failure notifications

@@ -36,7 +36,8 @@ This project demonstrates a real estate sales ETL pipeline using **Airflow**, **
 Both DAGs send success and failure messages to a Slack channel via SlackWebhookOperator.
 
 
-INITIAL DATA ASSESSMENT (10K SAMPLE, POSTGRES)
+### INITIAL DATA ASSESSMENT (10K SAMPLE, POSTGRES)
+
 Metric	Finding
 Rows analyzed	10,000 (out of 1.14M total)
 Date range	2002-01-02 → 2021-12-31
@@ -54,7 +55,7 @@ Rows with Assessor Remarks	1,002
 Rows with OPM Remarks	2,235
 Rows with Location info	368
 
-KEY OBSERVATIONS
+### KEY OBSERVATIONS
 Data completeness is strong for sale amount, date recorded, address.
 Categorical fields (property type, residential type) are populated but some values missing.
 Rows with Location info are limited → missing values are **not filled intentionally**

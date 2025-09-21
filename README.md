@@ -118,17 +118,12 @@ Script: 05_data_cleaning.sql
 STEP 6: Exploratory Data Analysis (EDA)
 Script: 06_eda.sql
 
-************************************  END OF PHASE I   ************************************************************
-
-DBT IMPLEMENTATION
+### PHASE II DBT IMPLEMENTATION
 
 # Real Estate Sales ETL + Data Modeling
 
 ## Dataset
-- Source: Connecticut Office of Policy and Management
-- Coverage: Property sales ≥ $2,000 from 2001–2022
-- Size: ~1.14M rows
-- Features: Town, Address, Date of Sale, Property Type, Sale Amount, Assessed Value, Remarks
+Same dataset as previously described (Connecticut Office of Policy and Management, property sales ≥ $2,000 from 2001–2022)
 
 ## PHASE II ETL Workflow
 
@@ -159,8 +154,33 @@ This model supports:
 
 ## Data Quality
 - Dropped sparse fields (opm_remarks < 5% coverage)
-- Replaced missing categories with `Unknown`
-- Applied dbt tests: `not_null`, `unique`, `accepted_values`
+- Replaced missing categories with Unknown
+- Applied dbt tests:
+  - Generic: not_null, unique, accepted_values, relationships
+  - Custom: sales_ratio range, positive sale_amount, positive assessed_value
+- Tests organized in dims.yml and facts.yml
+
+### Data Models and Marts
+Models are structured under the clean layer with dimensions, facts, and summary marts:
+
+models/clean/
+  ├── compare_current_previous.sql  
+  ├── dimensions/  
+  │     ├── dim_property_type.sql  
+  │     ├── dim_residential_type.sql  
+  │     ├── dim_town.sql  
+  │     └── dims.yml  
+  ├── facts/  
+  │     ├── fact_sales.sql  
+  │     └── facts.yml  
+  ├── property_type_summary.sql  
+  ├── sales_flag_summary.sql  
+  ├── sales_over_time.sql  
+  ├── schema.yml  
+  └── top_ten_towns.sql  
+
+- Fact and dimension models implement a star schema for analytical queries  
+- Additional marts (summaries, comparisons, top N analysis) provide business insights  
 
 ## Tech Stack
 This project implements an ETL workflow starting with extraction and progressing through transformation and loading:
@@ -170,3 +190,11 @@ This project implements an ETL workflow starting with extraction and progressing
 - dbt → Transformation, testing, documentation, and building production-ready marts
 - Python → Data exploration, initial CSV loading, EDA, and visualization
 - Slack → Channel integration for DAG success and failure notifications
+
+## Documentation and Snapshots
+Project artifacts are stored under the docs and dbt directories:
+
+- docs/airflow_screenshots → Airflow DAG runs and orchestration flow
+- docs/dbt_docs_screenshots → dbt docs UI, lineage, and test results
+- docs/dbt_docs_screenshots → Entity-Relationship (ER) diagram of the star schema
+- dbt/real_estate_dbt/snapshots → dbt snapshot CSVs for marts (historical tracking of fact and dimension tables)

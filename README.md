@@ -126,7 +126,7 @@ Script: 06_eda.sql
 ### Dataset
 Same dataset as previously described (Connecticut Office of Policy and Management, property sales ≥ $2,000 from 2001–2022)
 
-## PHASE II ETL Workflow
+### PHASE II ETL Workflow
 
 - **Airflow DAG** → Orchestrates the extract & load into the Airflow/Postgres DB; 
 - triggers **Phase II transformations** via the bash command:  

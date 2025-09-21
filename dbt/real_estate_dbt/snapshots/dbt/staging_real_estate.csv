@@ -1,0 +1,11 @@
+"Serial Number","List Year","Date Recorded","Town","Address","Assessed Value","Sale Amount","Sales Ratio","Property Type","Residential Type","Non Use Code","Assessor Remarks","OPM remarks","Location"
+"2020177","2020","04/14/2021","Ansonia","323 BEAVER ST","133000","248400","0.5354","Residential","Single Family",NULL,NULL,NULL,"POINT (-73.06822 41.35014)"
+"2020225","2020","05/26/2021","Ansonia","152 JACKSON ST","110500","239900","0.4606","Residential","Three Family",NULL,NULL,NULL,NULL
+"2020348","2020","09/13/2021","Ansonia","230 WAKELEE AVE","150500","325000","0.463","Commercial",NULL,NULL,NULL,NULL,NULL
+"2020090","2020","12/14/2020","Ansonia","57 PLATT ST","127400","202500","0.6291","Residential","Two Family",NULL,NULL,NULL,NULL
+"210288","2021","06/20/2022","Avon","12 BYRON DRIVE","179990","362500","0.4965","Residential","Condo",NULL,NULL,NULL,"POINT (-72.879115982 41.773452988)"
+"200500","2020","09/07/2021","Avon","245 NEW ROAD","217640","400000","0.5441","Residential","Single Family",NULL,NULL,NULL,NULL
+"200121","2020","12/15/2020","Avon","63 NORTHGATE","528490","775000","0.6819","Residential","Single Family",NULL,NULL,NULL,"POINT (-72.89675 41.79445)"
+"20058","2020","06/01/2021","Barkhamsted","46 RATLUM MTN RD","203530","415000","0.490433735","Residential","Single Family",NULL,"2003 COLONIAL, 2140 SFLA, 2.99 AC",NULL,NULL
+"200046","2020","01/25/2021","Beacon Falls","34 LASKY ROAD","158030","243000","0.6503","Residential","Single Family",NULL,NULL,NULL,NULL
+"200016","2020","11/13/2020","Beacon Falls","9 AVON COURT","65590","100000","0.6559","Residential","Condo",NULL,NULL,NULL,NULL

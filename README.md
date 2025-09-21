@@ -37,23 +37,23 @@ Both DAGs send success and failure messages to a Slack channel via SlackWebhookO
 
 
 ### INITIAL DATA ASSESSMENT (10K SAMPLE, POSTGRES)
-
-Metric	Finding
-Rows analyzed	10,000 (out of 1.14M total)
-Date range	2002-01-02 → 2021-12-31
-Distinct towns	149
-Missing date_recorded	0
-Missing address	0
-Max Sale Amount	$49,000,000
-Avg Sale Amount	$520,083
-Missing Sale Amount	0
-Max Assessed Value	$60,231,850
-Distinct Property Types	6
-Distinct Residential Types	36
-Distinct Non-Use Codes	5
-Rows with Assessor Remarks	1,002
-Rows with OPM Remarks	2,235
-Rows with Location info	368
+| Metric                     | Finding                     |
+| -------------------------- | --------------------------- |
+| Rows analyzed              | 10,000 (out of 1.14M total) |
+| Date range                 | 2002-01-02 → 2021-12-31     |
+| Distinct towns             | 149                         |
+| Missing date\_recorded     | 0                           |
+| Missing address            | 0                           |
+| Max Sale Amount            | \$49,000,000                |
+| Avg Sale Amount            | \$520,083                   |
+| Missing Sale Amount        | 0                           |
+| Max Assessed Value         | \$60,231,850                |
+| Distinct Property Types    | 6                           |
+| Distinct Residential Types | 36                          |
+| Distinct Non-Use Codes     | 5                           |
+| Rows with Assessor Remarks | 1,002                       |
+| Rows with OPM Remarks      | 2,235                       |
+| Rows with Location info    | 368                         |
 
 ### KEY OBSERVATIONS
 Data completeness is strong for sale amount, date recorded, address.

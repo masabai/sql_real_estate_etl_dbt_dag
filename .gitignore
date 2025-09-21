@@ -30,14 +30,9 @@ venv_airflow/
 __pycache__/
 
 # Misc file
-dbt/real_estate_dbt/models/marts/sales_price_range.sql.wip
-sql_project/advanced-eda-wip
-dbt/real_estate_dbt/dbt_notes
 project_structure.py
 Real Estate Docker Mounting.txt
-more_test.txt
-Recover_Deleted_Files.txt
-notes
+git_notes
 # OS-specific
 .DS_Store
 *.pyc

@@ -207,14 +207,21 @@ This project implements an ETL workflow starting with extraction and progressing
 Project artifacts are stored under the `docs` and `dbt` directories:
 
 - **docs/airflow_screenshots** → Airflow DAG runs and orchestration flow:
+### Figure 1: RealEstate dbt build DAG – Graph View
   - [![Airflow DAG Screenshot](docs/airflow_screenshots/dbt_realestate_dag.png)](docs/airflow_screenshots/dbt_realestate_dag.png)
+### Figure 2: RealEstate SQL ETL DAG (Load and Explore Data) - Graph View
   - [![Load & Explore DAG Screenshot](docs/airflow_screenshots/load_explore_dag.png)](docs/airflow_screenshots/load_explore_dag.png)
 
 - **docs/dbt_docs_screenshots** → dbt docs UI, lineage, test results, and ER diagram of the star schema:
+### Figure 1: Entity-Relationship Diagram
   - [![Entity-Relationship Diagram](docs/dbt_docs_screenshots/ER_diagram.png)](docs/dbt_docs_screenshots/ER_diagram.png)
+### Figure 2: dbt Custom Test Overview
   - [![dbt Custom Test Screenshot](docs/dbt_docs_screenshots/dbt_custom_test.png)](docs/dbt_docs_screenshots/dbt_custom_test.png)
+### Figure 3: dbt Fact Sales Model
   - [![dbt Fact Sales Screenshot](docs/dbt_docs_screenshots/dbt_fact_sales.png)](docs/dbt_docs_screenshots/dbt_fact_sales.png)
+### Figure 4: dbt Test Run – Set 1
   - [![dbt Test Run Set 1 Screenshot](docs/dbt_docs_screenshots/dbt_test_run_set1.png)](docs/dbt_docs_screenshots/dbt_test_run_set1.png)
+### Figure 5: dbt Test Run – Set 1
   - [![dbt Test Run Set 2 Screenshot](docs/dbt_docs_screenshots/dbt_test_run_set2.png)](docs/dbt_docs_screenshots/dbt_test_run_set2.png)
 
 - **dbt/real_estate_dbt/snapshots** → dbt snapshot CSVs for marts (historical tracking of fact and dimension tables):

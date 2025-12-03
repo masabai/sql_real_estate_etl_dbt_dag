@@ -41,25 +41,6 @@ This project demonstrates a real estate sales ETL pipeline using **Airflow**, **
 ### DAG Slack Notifications
 Both DAGs send success and failure messages to a Slack channel via SlackWebhookOperator.
 
-### Initial Data Assessment (10K Sample, POSTGRES)
-| Metric                     | Finding                     |
-| -------------------------- | --------------------------- |
-| Rows analyzed              | 10,000 (out of 1.14M total) |
-| Date range                 | 2002-01-02 → 2021-12-31     |
-| Distinct towns             | 149                         |
-| Missing date\_recorded     | 0                           |
-| Missing address            | 0                           |
-| Max Sale Amount            | \$49,000,000                |
-| Avg Sale Amount            | \$520,083                   |
-| Missing Sale Amount        | 0                           |
-| Max Assessed Value         | \$60,231,850                |
-| Distinct Property Types    | 6                           |
-| Distinct Residential Types | 36                          |
-| Distinct Non-Use Codes     | 5                           |
-| Rows with Assessor Remarks | 1,002                       |
-| Rows with OPM Remarks      | 2,235                       |
-| Rows with Location info    | 368                         |
-
 ### Key Observation
 Data completeness is strong for sale amount, date recorded, address.
 Categorical fields (property type, residential type) are populated but some values missing.
@@ -83,46 +64,10 @@ Sale amounts span $2,000 → $49M, avg just over $500k.
 
 
 ### PHASE I ETL WORKFLOW (STEPS 1–6)
-
-STEP 0: Load CSV to Postgres
-Raw dataset (~1M rows) downloaded from official CT government source.
-Sampled smaller CSV for development and testing.
-Loaded CSV into Postgres using Python.
-Logs written to sql_project.log for traceability.
-Script: etl/load_real_estate.py
-
-STEP 1: Explore Raw Data
-Ran exploratory queries to understand schema, row counts, data types, date ranges, distinct values.
-Checked for missing/invalid fields.
-Script: 01_explore_raw_data.sql
-
-STEP 2: Rename Columns
-Renamed to snake_case for consistency.
-Removed spaces/special characters.
-Standardized casing.
-Script: 02_rename_columns.sql
-
-STEP 3: Create Clean View
-Built a staging view from the raw dataset.
-Preserved all original fields for downstream processing.
-Script: 03_create_clean_view.sql
-
-STEP 4: Profile Data Completeness
-Counted NULLs and blanks across all columns.
-Evaluated categorical coverage (property_type, residential_type, non_use_code).
-Found opm_remarks very sparse (~3.7% coverage).
-Script: 04_profile_data_completeness.sql
-
-STEP 5: Data Cleaning
-Trimmed whitespace, standardized casing.
-Dropped opm_remarks based on profiling results.
-Replaced blanks in categorical fields with 'Unknown'.
-Cleaned assessor_remarks with regex + INITCAP.
-Rounded sales_ratio to 2 decimals.
-Script: 05_data_cleaning.sql
-
-STEP 6: Exploratory Data Analysis (EDA)
-Script: 06_eda.sql
+Load & Explore: Imported raw CSV into Postgres and performed initial data exploration.
+Clean & Transform: Standardized column names, created clean staging views, and handled missing or inconsistent data.
+Profile & Validate: Assessed data completeness and quality to ensure reliable downstream analysis.
+EDA: Conducted exploratory analysis to understand trends and prepare datasets for modeling.
 
 ## PHASE II DBT  (Transformation & Modeling)
 
@@ -174,23 +119,6 @@ This model supports:
 
 ### Data Models and Marts
 Models are structured under the clean layer with dimensions, facts, and summary marts:
-
-models/clean/
-  ├── compare_current_previous.sql  
-  ├── dimensions/  
-  │     ├── dim_property_type.sql  
-  │     ├── dim_residential_type.sql  
-  │     ├── dim_town.sql  
-  │     └── dims.yml  
-  ├── facts/  
-  │     ├── fact_sales.sql  
-  │     └── facts.yml  
-  ├── property_type_summary.sql  
-  ├── sales_flag_summary.sql  
-  ├── sales_over_time.sql  
-  ├── schema.yml  
-  └── top_ten_towns.sql  
-
 - Fact and dimension models implement a star schema for analytical queries  
 - Additional marts (summaries, comparisons, top N analysis) provide business insights  
 

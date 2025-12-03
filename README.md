@@ -63,51 +63,23 @@ Sale amounts span $2,000 → $49M, avg just over $500k.
 - **Note:** Snapshot feature is skipped because the data lacks reliable timestamps and to avoid altering government-provided data excessively.
 
 
-### PHASE I ETL WORKFLOW (STEPS 1–6)
+### PHASE I ETL WORKFLOW 
 Load & Explore: Imported raw CSV into Postgres and performed initial data exploration.
 Clean & Transform: Standardized column names, created clean staging views, and handled missing or inconsistent data.
 Profile & Validate: Assessed data completeness and quality to ensure reliable downstream analysis.
 EDA: Conducted exploratory analysis to understand trends and prepare datasets for modeling.
 
-## PHASE II DBT  (Transformation & Modeling)
+## Phase II – dbt Transformation & Modeling (Summary)
 
-### Dataset
-Same dataset as previously described (Connecticut Office of Policy and Management, property sales ≥ $2,000 from 2001–2022)
-
-### PHASE II ETL Workflow
-
-- **Airflow DAG** → Orchestrates the extract & load into the Airflow/Postgres DB; 
-- triggers **Phase II transformations** via the bash command:
-  ```bash
-dbt build
-
-#### Model inspection:
-    ```bash
-dbt list       # lists all models that will be built
-dbt test       # runs all data tests on models
-dbt docs generate && dbt docs serve  # generate and view dbt documentation locally  
-`
+Orchestration: Airflow DAG triggers dbt transformations on the Postgres database.
+Transform & Model: Built production-ready dbt models, including dimensions, facts, and summary marts.
+Testing & Documentation: Ran automated dbt tests and generated documentation for data validation and lineage inspection.`
 
 ## Data Model
-Implemented a **star schema** for analytical queries:
-
-- **fact_sales**
-  - Measures: sale_amount, assessed_value, avg_sales_ratio  
-  - Keys: list_year, date_recorded, town, property_type_id, residential_type_id  
-  - Sources: stg_real_estate_clean joined with dim_town, dim_property_type, dim_residential_type
-- **dim_town**  
-  - town_id, town_name
-
-- **dim_property_type**  
-  - property_type_id, property_type_name
-
-- **dim_residential_type**  
-  - residential_type_id, residential_type_name
-
-This model supports:
-- Trend analysis by year, quarter
-- Breakdown of sales by property type and town
-- Average assessed vs. sale price comparisons
+Implemented a star schema with:
+Fact Table: fact_sales (sale_amount, assessed_value, avg_sales_ratio)
+Dimension Tables: dim_town, dim_property_type, dim_residential_type
+Enables trend analysis, sales breakdowns by property type/town, and comparisons of assessed vs. sale prices.
 
 ## Data Quality
 - Dropped sparse fields (opm_remarks < 5% coverage)

@@ -33,6 +33,7 @@ __pycache__/
 project_structure.py
 Real Estate Docker Mounting.txt
 git_notes
+docker-compose.yml
 # OS-specific
 .DS_Store
 *.pyc

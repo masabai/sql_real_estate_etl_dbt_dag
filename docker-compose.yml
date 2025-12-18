@@ -6,8 +6,8 @@ services:
     container_name: airflow_postgres
     restart: always
     environment:
-      POSTGRES_USER: XXXXX
-      POSTGRES_PASSWORD: XXXXX
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     ports:
       - "6543:5432"
@@ -20,7 +20,7 @@ services:
     container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: XXXXX
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
     depends_on:
@@ -36,7 +36,7 @@ services:
     environment:
       - AIRFLOW_HOME=/opt/airflow
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:XXXXX@postgres/XXXXXX
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
     volumes:
       -  /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
       -  /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
@@ -75,7 +75,7 @@ services:
       - postgres
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:username@postgres/password
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |

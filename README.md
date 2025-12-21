@@ -4,25 +4,32 @@
 End-to-end SQL/dbt ETL pipeline on ~1.1M rows of CT property sales.
 
 Phase I: SQL scripts for exploration, cleaning, profiling, and staging.
+
 Phase II: dbt models for transformations, fact/dimension tables, automated tests, and documentation.
+
 *** Python only for CSV ingestion and Airflow DAG orchestration. ***
 
 ### Data Source
 CT Office of Policy and Management
-Property sales ≥ $2,000 (2001–2022), covering town, address, sale date, property type, sale/assessed value, remarks.
+Property sales ≥ $2,000 (2001–2022), covering town, address, sale date, property type, sale/assessed value, and remarks.
 Annual Grand List reporting (Oct → Sep).
 
 ### Tech Stack
 
 Airflow: ETL orchestration + Slack notifications
+
 Postgres: Local data warehouse for raw/staging/analytics
+
 dbt: Transformations, testing, documentation, star-schema modeling
+
 Python: CSV ingestion and EDA
+
 Slack: DAG success/failure alerts
 
 ### ETL Overview
 
 Phase I SQL: 6 sequential scripts → exploration, column standardization, staging, profiling, cleaning, EDA
+
 Phase II dbt: Build star schema: fact_sales + dim_town, dim_property_type, dim_residential_type
 
 Data Quality: Not null, unique, accepted values, relationships, and custom numeric tests
@@ -31,6 +38,7 @@ Data Quality: Not null, unique, accepted values, relationships, and custom numer
 Project artifacts are stored under the `docs` and `dbt` directories:
 
 - **docs/airflow_screenshots** → Airflow DAG runs and orchestration flow:
+  
 ### Figure 1: RealEstate dbt build DAG – Graph View
   - [![Airflow DAG Screenshot](docs/airflow_screenshots/dbt_realestate_dag.png)](docs/airflow_screenshots/dbt_realestate_dag.png)
 ### Figure 2: RealEstate SQL ETL DAG (Load and Explore Data) - Graph View

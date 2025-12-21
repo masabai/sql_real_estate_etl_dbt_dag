@@ -18,12 +18,10 @@ Some municipalities may not report sales for one year after a revaluation.
 
 ## Project Setup (High-Level)
 This project demonstrates a real estate sales ETL pipeline using **Airflow**, **dbt**, and **Postgres**.
-
-- This project demonstrates a real estate sales ETL pipeline using Airflow, dbt, and Postgres.
 - The pipeline is fully containerized using Docker, with services - orchestrated via docker-compose.
 - Airflow orchestrates the pipeline, dynamically fetching real estate sales data from a URL on data.gov at the start of each run.
 - Postgres is used as the local data warehouse (containerized within Docker).
-- The Airflow DAG is configured to send notifications to a designated Slack channel upon task failures, ensuring operational monitoring.
+- Slack notifications are triggered when DAGs succeed or fail
 - dbt models are run within the Airflow environment for robust data transformation and testing.
 
 ## Notes / Tips

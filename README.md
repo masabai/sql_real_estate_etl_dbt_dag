@@ -1,106 +1,40 @@
 # Real Estate Sales ETL Pipeline (Connecticut, 2001–2022)
 
 ## Project Summary
-This project implements a mostly SQL/dbt ETL workflow on historical Connecticut real estate sales data (2001–2022), with Python only used for data ingestion and Airflow DAG orchestration.  
-It demonstrates staging, transformation, and modeling of data into fact and dimension tables, along with automated testing and validation.  
-A 10K sample seed is used for development, while the full dataset (~1M rows) is loaded for production-style ETL.
+End-to-end SQL/dbt ETL pipeline on ~1.1M rows of CT property sales.
 
-## Data Source & Coverage
-Metadata last updated: December 20, 2024
-Maintained by: Connecticut Office of Policy and Management
+**Phase I:** SQL scripts for exploration, cleaning, profiling, and staging.
 
-Covers all property sales ≥ $2,000 between October 1 and September 30 of each year.
-Includes: Town, Address, Date of Sale, Property Type, Sale Amount, Assessed Value, and related remarks.
-Governed by: Connecticut General Statutes §10-261a and §10-261b
+**Phase II:** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
-Annual sales are reported by Grand List year (Oct 1 → Sep 30).
-Some municipalities may not report sales for one year after a revaluation.
+##### *** Python only for CSV ingestion and Airflow DAG orchestration ***
 
-## Project Setup (High-Level)
-This project demonstrates a real estate sales ETL pipeline using **Airflow**, **dbt**, and **Postgres**.
+### Data Source
+CT Office of Policy and Management
+Property sales ≥ $2,000 (2001–2022), covering town, address, sale date, property type, sale/assessed value, and remarks.
+Annual Grand List reporting (Oct → Sep).
 
-- This project demonstrates a real estate sales ETL pipeline using Airflow, dbt, and Postgres.
-- The pipeline is fully containerized using Docker, with services - orchestrated via docker-compose.
-- Airflow orchestrates the pipeline, dynamically fetching real estate sales data from a URL on data.gov at the start of each run.
-- Postgres is used as the local data warehouse (containerized within Docker).
-- The Airflow DAG is configured to send notifications to a designated Slack channel upon task failures, ensuring operational monitoring.
-- dbt models are run within the Airflow environment for robust data transformation and testing.
+### Tech Stack
 
-## Notes / Tips
-- Airflow containers do **not persist dbt installations** between restarts.  
-- Installing dbt via the Dockerfile guarantees dbt is always available without manual intervention.
+**Docker:** Containerized environment for Airflow, Postgres, and dbt, ensuring reproducible and isolated pipelines
 
-## Highlights
-- Built Airflow DAGs to orchestrate ETL and SQL transformations:
-- load_explore_dag → executes sequential SQL scripts for exploration, cleaning, and staging.
-- dbt_realestate_dag → runs dbt build on the real_estate_dbt project inside Airflow.
-- Sequential execution of 6 SQL scripts (data cleaning, profiling, staging).
-- Demonstrates PythonOperator + BashOperator + Slack integration.
+**Airflow:** ETL orchestration + Slack notifications
 
-### DAG Slack Notifications
-Both DAGs send success and failure messages to a Slack channel via SlackWebhookOperator.
+**Postgres:** Local data warehouse for raw/staging/analytics
 
-### Key Observation
-Data completeness is strong for sale amount, date recorded, address.
-Categorical fields (property type, residential type) are populated but some values missing.
-Rows with Location info are limited → missing values, NULLs are **not filled intentionally**
-Remarks fields are sparse (assessor, OPM) → not reliable for analysis.
-Sale amounts span $2,000 → $49M, avg just over $500k.
+**dbt:** Transformations, testing, documentation, star-schema modeling
 
-## Project Phases
+**Python:** CSV ingestion and EDA
 
-**Phase I – SQL (Raw Data Cleaning & Exploration)**  
-- Data is loaded from CSV URLs into Postgres using **Python only for the loading step and DAG orchestration**.  
-- All cleaning, validation, and exploratory transformations are performed **exclusively in SQL**.  
-- Focus is on understanding the data, handling missing values, and generating baseline transformations without introducing additional tools.  
+**Slack:** DAG success/failure alerts
 
-**Phase II – dbt (Transformation & Modeling)**
-- Cleaning and transformations are **repeated and formalized in dbt models**.  
-- Focus is on building a **maintainable pipeline for production-ready marts** while leveraging dbt features, including:  
-  - `dbt seed`, `dbt run`, `dbt test` (default & custom tests), `dbt build`, `dbt docs`  
-  - Use of `refs` and `macros` for modular, reusable transformations  
-- **Note:** Snapshot feature is skipped because the data lacks reliable timestamps and to avoid altering government-provided data excessively.
+### ETL Overview
 
+**Phase I SQL:** 6 sequential scripts → exploration, column standardization, staging, profiling, cleaning, EDA
 
-### PHASE I ETL WORKFLOW 
-Load & Explore: Imported raw CSV into Postgres and performed initial data exploration.
-Clean & Transform: Standardized column names, created clean staging views, and handled missing or inconsistent data.
-Profile & Validate: Assessed data completeness and quality to ensure reliable downstream analysis.
-EDA: Conducted exploratory analysis to understand trends and prepare datasets for modeling.
+**Phase II dbt:** Build star schema: fact_sales + dim_town, dim_property_type, dim_residential_type
 
-## Phase II – dbt Transformation & Modeling (Summary)
-
-Orchestration: Airflow DAG triggers dbt transformations on the Postgres database.
-Transform & Model: Built production-ready dbt models, including dimensions, facts, and summary marts.
-Testing & Documentation: Ran automated dbt tests and generated documentation for data validation and lineage inspection.`
-
-## Data Model
-Implemented a star schema with:
-Fact Table: fact_sales (sale_amount, assessed_value, avg_sales_ratio)
-Dimension Tables: dim_town, dim_property_type, dim_residential_type
-Enables trend analysis, sales breakdowns by property type/town, and comparisons of assessed vs. sale prices.
-
-## Data Quality
-- Dropped sparse fields (opm_remarks < 5% coverage)
-- Replaced missing categories with Unknown
-- Applied dbt tests:
-  - Generic: not_null, unique, accepted_values, relationships
-  - Custom: sales_ratio range, positive sale_amount, positive assessed_value
-- Tests organized in dims.yml and facts.yml
-
-### Data Models and Marts
-Models are structured under the clean layer with dimensions, facts, and summary marts:
-- Fact and dimension models implement a star schema for analytical queries  
-- Additional marts (summaries, comparisons, top N analysis) provide business insights  
-
-## Tech Stack
-This project implements an ETL workflow starting with extraction and progressing through transformation and loading:
-
-- Airflow → ETL orchestration, manages DAGs for extraction, transformation, and loading
-- Postgres → Central data storage for raw and transformed datasets
-- dbt → Transformation, testing, documentation, and building production-ready marts
-- Python → Data exploration, initial CSV loading, EDA, and visualization
-- Slack → Channel integration for DAG success and failure notifications
+Data Quality: Not null, unique, accepted values, relationships, and custom numeric tests
 
 ## Documentation and Snapshots
 Project artifacts are stored under the `docs` and `dbt` directories:

@@ -1,6 +1,4 @@
--- ========================================
 -- Step 1: Data Exploration & Initial Assessment
--- ========================================
 -- Purpose: Understand raw data schema, data types, ranges, distributions, and missing values.
 
 -- Verify column names and data types
@@ -11,9 +9,7 @@ SELECT
   is_nullable
 FROM information_schema.columns
 WHERE table_schema = 'staging'
-
-
-  AND table_name = 'real_estate'
+AND table_name = 'real_estate'
 ORDER BY ordinal_position;
 
 -- Overview & data quality

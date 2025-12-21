@@ -1,6 +1,4 @@
--- ======================================================
 -- Step 6: Analytical Queries / EDA with Derived Features
--- ======================================================
 -- Distribution of sales over time
 SELECT list_year,
        COUNT(*) AS sales_count,

@@ -1,6 +1,4 @@
--- ========================================
 -- Step 3: Create Clean View
--- ========================================
 -- Create a staging view from the raw real_estate table
 -- Preserves all original columns for downstream processing
 

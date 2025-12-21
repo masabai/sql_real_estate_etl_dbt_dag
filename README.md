@@ -32,7 +32,6 @@ This project demonstrates a real estate sales ETL pipeline using **Airflow**, **
 
 ## Highlights
 - Built Airflow DAGs to orchestrate ETL and SQL transformations:
-- load_real_estate_dag → loads raw real estate CSVs into Postgres.
 - load_explore_dag → executes sequential SQL scripts for exploration, cleaning, and staging.
 - dbt_realestate_dag → runs dbt build on the real_estate_dbt project inside Airflow.
 - Sequential execution of 6 SQL scripts (data cleaning, profiling, staging).

@@ -1,6 +1,4 @@
--- ========================================
 -- Step 2: Rename Columns to Snake_Case
--- ========================================
 -- Purpose: Standardize column names for easier querying and consistency
 -- All renames apply to the clean working view created in Step 2
 -- Each column is renamed from the original format to snake_case:

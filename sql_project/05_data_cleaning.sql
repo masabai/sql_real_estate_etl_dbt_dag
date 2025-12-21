@@ -1,6 +1,4 @@
--- ================================================================
 -- Step 5: Perform Data Cleaning (exclude `opm_remarks`)
--- ================================================================
 -- Purpose: Clean key columns based on profiling results.
 -- Excludes `opm_remarks` due to low non-null percentage (~3.7%).
 -- Cleans strings, standardizes casing, replaces empty strings, and rounds numeric columns.

@@ -14,10 +14,9 @@ services:
     volumes:
       - postgres_db_volume:/var/lib/postgresql/data
 
-
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
+    container_name: pgadmin_new
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -28,54 +27,59 @@ services:
     restart: always
 
   airflow-webserver:
-    image: airflow:dbt  #apache/airflow:2.7.0
+    image: airflow:dbt
     container_name: airflow_webserver
+    env_file:
+      - ./.env
+    user: "${AIRFLOW_UID}:0"
     restart: always
     depends_on:
       - postgres
     environment:
-      - AIRFLOW_HOME=/opt/airflow
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW_HOME: /opt/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
     volumes:
-      -  /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
-      -  /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
-      -  /mnt/c/PythonProject/RealEstate/dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
-      -  /mnt/c/PythonProject/RealEstate/sql_project:/opt/airflow/projects/sql_project:cached
-      -  /mnt/c/PythonProject/RealEstate/logs:/opt/airflow/logs:cached
-      -  /mnt/c/PythonProject/RealEstate/plugins:/opt/airflow/plugins:cached
-      -  /mnt/c/PythonProject/RealEstate/config.yml:/opt/airflow/config.yml:cached
+      - airflow_logs:/opt/airflow/logs
+      - ./dags:/opt/airflow/dags:cached
+      - ./plugins:/opt/airflow/plugins:cached
+      - ./config.yml:/opt/airflow/config.yml:cached
+      - ./dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
+      - ./sql_project:/opt/airflow/projects/sql_project:cached
     ports:
       - "8081:8080"
     command: webserver
 
   airflow-scheduler:
-    image: airflow:dbt #apache/airflow:2.7.0
+    image: airflow:dbt
     container_name: airflow_scheduler
+    env_file:
+      - ./.env
+    user: "${AIRFLOW_UID}:0"
     restart: always
     depends_on:
       - postgres
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
     volumes:
-      - /mnt/c/PythonProject/RealEstate/dags:/opt/airflow/dags:cached
-      - /mnt/c/Users/sawyn/.dbt:/home/airflow/.dbt:cached
-      - /mnt/c/PythonProject/RealEstate/dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
-      - /mnt/c/PythonProject/RealEstate/sql_project:/opt/airflow/projects/sql_project:cached
-      - /mnt/c/PythonProject/RealEstate/logs:/opt/airflow/logs:cached
-      - /mnt/c/PythonProject/RealEstate/plugins:/opt/airflow/plugins:cached
-      - /mnt/c/PythonProject/RealEstate/config.yml:/opt/airflow/config.yml:cached
-
+      - airflow_logs:/opt/airflow/logs
+      - ./dags:/opt/airflow/dags:cached
+      - ./plugins:/opt/airflow/plugins:cached
+      - ./config.yml:/opt/airflow/config.yml:cached
+      - ./dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
+      - ./sql_project:/opt/airflow/projects/sql_project:cached
     command: scheduler
 
   airflow-init:
-    image: apache/airflow:2.7.0
+    image: airflow:dbt
     depends_on:
       - postgres
+    env_file:
+      - ./.env
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |
@@ -83,3 +87,4 @@ services:
 
 volumes:
   postgres_db_volume:
+  airflow_logs:

@@ -7,7 +7,7 @@ End-to-end SQL/dbt ETL pipeline on ~1.1M rows of CT property sales.
 
 **Phase II:** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
-##### Python only for CSV ingestion and Airflow DAG orchestration.
+##### *** Python only for CSV ingestion and Airflow DAG orchestration ***
 
 ### Data Source
 CT Office of Policy and Management

@@ -55,8 +55,8 @@ with DAG(
         previous_task >> sql_task
         previous_task = sql_task
 
-        # Task: Slack notification on success
-        # Sends message if DAG completes successfully
+    # Task: Slack notification on success
+    # Sends message if DAG completes successfully
     notify_slack_success = SlackWebhookOperator(
         task_id="notify_slack_success",
         http_conn_id="real_estate_slack",

@@ -7,7 +7,51 @@ End-to-end SQL/dbt ETL pipeline on ~1.1M rows of CT property sales.
 
 **Phase II:** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
-##### *** Python only for CSV ingestion and Airflow DAG orchestration ***
+**Phase III:** AI Reasoning Engine (Text-to-SQL)
+An intelligent interface that allows users to query the clean star-schema using natural language. This is a **Metadata-Injected RAG** pipeline (Retrieval-Augmented Generation) that avoids the "fuzzy" matching of Vector DBs in favor of 100% schema accuracy.
+
+## AI Architecture
+*   **Reasoning Model:** Llama-3.1-8b-instant (via Groq/FastAPI)
+*   **RAG Strategy:** Deterministic Context Injection (Schema + SQL Rules)
+*   **Constraints:** Temperature=0 for consistent, executable PostgreSQL generation
+*   **Features:** Automated rounding for aggregates, direct town/property type filtering, and absolute integer counts.
+
+### System Architecture
+
+```mermaid
+graph LR
+    subgraph "Retrieve (R)"
+        A[User Question]
+        B[(dbt Schema)]
+    end
+
+    subgraph "Reasoning (A)"
+        C{Llama-3.1 AI}
+        D[[Python Logic]]
+    end
+
+    subgraph "Generate (G)"
+        E[(Postgres DB)]
+        F[HTML Table]
+    end
+
+    %% Flow Connections
+    A --> C
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+
+    %% Professional High-Contrast Palette (Darker fills, white text)
+    style A fill:#ff00ff,stroke:#cc00cc,stroke-width:2px,color:#fff 
+    style B fill:#FFEB3B,stroke:#FBC02D,stroke-width:2px,color:#000  
+    style C fill:#ff0000,stroke:#b30000,stroke-width:2px,color:#fff 
+    style D fill:#0277bd,stroke:#01579b,stroke-width:2px,color:#fff
+    style E fill:#8e44ad,stroke:#71368a,stroke-width:2px,color:#fff
+    style F fill:#1DB954,stroke:#191414,stroke-width:2px,color:#fff
+```
+
+#### *** Python for CSV ingestion, Airflow orchestration, and the AI Reasoning Engine (FastAPI) ***
 
 ### Data Source
 CT Office of Policy and Management
@@ -27,6 +71,12 @@ Annual Grand List reporting (Oct → Sep).
 **Python:** CSV ingestion and EDA
 
 **Slack:** DAG success/failure alerts
+
+**FastAPI:** High-performance web framework for the AI Reasoning Engine and HTML Results UI.
+
+**Llama-3.1:** LLM "Brain" used for deterministic Text-to-SQL translation (Temperature=0).
+
+**Groq:** Fast inference engine to ensure near-zero latency for the RAG pipeline.
 
 ### ETL Overview
 

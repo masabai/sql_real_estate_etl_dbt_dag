@@ -1,9 +1,9 @@
-# Real Estate Sales ETL Pipeline (Connecticut, 2001–2022)
+# Real Estate Sales ELT Pipeline (Connecticut, 2001–2022)
 
 ## Project Summary
-End-to-end SQL/dbt ETL pipeline on ~1.1M rows of CT property sales.
+End-to-end SQL/dbt ELT pipeline on ~1.1M rows of CT property sales.
 
-**Phase I:** SQL scripts for exploration, cleaning, profiling, and staging.
+**Phase I (ELT):** Python-based ingestion to Raw schema, followed by SQL scripts for profiling and Staging.
 
 **Phase II:** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
@@ -78,13 +78,13 @@ Annual Grand List reporting (Oct → Sep).
 
 **Groq:** Fast inference engine to ensure near-zero latency for the RAG pipeline.
 
-### ETL Overview
+### ELT & AI Workflow
 
-**Phase I SQL:** 6 sequential scripts → exploration, column standardization, staging, profiling, cleaning, EDA
+**Phase I (Extract & Load):** Python-based ingestion to Postgres raw schema. 6 sequential SQL scripts for column standardization, profiling, and staging.
 
-**Phase II dbt:** Build star schema: fact_sales + dim_town, dim_property_type, dim_residential_type
+**Phase II (Dbt):** star-schema modeling (fact_sales + dimensions). Automated data quality enforcement: uniqueness, relationships, and custom numeric tests.
 
-Data Quality: Not null, unique, accepted values, relationships, and custom numeric tests
+**Phase III (AI Reasoning):** Metadata-Injected RAG interface using Llama-3.1 that allows non-technical users to query the warehouse in plain English.
 
 ## Documentation and Snapshots
 Project artifacts are stored under the `docs` and `dbt` directories:

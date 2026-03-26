@@ -5,9 +5,9 @@ End-to-end SQL/dbt ELT pipeline on ~1.1M rows of CT property sales.
 
 **Phase I (ELT):** Python-based ingestion to Raw schema, followed by SQL scripts for profiling and Staging.
 
-**Phase II:** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
+**Phase II (dbt):** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
-**Phase III:** AI Reasoning Engine (Text-to-SQL)
+**Phase III (AI):** AI Reasoning Engine (Text-to-SQL)
 An intelligent interface that allows users to query the clean star-schema using natural language. This is a **Metadata-Injected RAG** pipeline (Retrieval-Augmented Generation) that avoids the "fuzzy" matching of Vector DBs in favor of 100% schema accuracy.
 
 ## AI Architecture
@@ -16,7 +16,7 @@ An intelligent interface that allows users to query the clean star-schema using 
 *   **Constraints:** Temperature=0 for consistent, executable PostgreSQL generation
 *   **Features:** Automated rounding for aggregates, direct town/property type filtering, and absolute integer counts.
 
-### System Architecture
+#### System Architecture
 
 ```mermaid
 graph LR
@@ -56,7 +56,7 @@ graph LR
 ### Data Source
 CT Office of Policy and Management
 Property sales ≥ $2,000 (2001–2022), covering town, address, sale date, property type, sale/assessed value, and remarks.
-Annual Grand List reporting (Oct → Sep).
+
 
 ### Tech Stack
 
@@ -80,14 +80,11 @@ Annual Grand List reporting (Oct → Sep).
 
 ### ELT & AI Workflow
 
-**Phase I (Extract & Load):** Python-based ingestion to Postgres raw schema. 6 sequential SQL scripts for column standardization, profiling, and staging.
+**Phase I (Extract, Load, Transform):** Python-based ingestion to Postgres raw schema. 6 sequential SQL scripts for column standardization, profiling, and staging.
 
 **Phase II (Dbt):** star-schema modeling (fact_sales + dimensions). Automated data quality enforcement: uniqueness, relationships, and custom numeric tests.
 
 **Phase III (AI Reasoning):** Metadata-Injected RAG interface using Llama-3.1 that allows non-technical users to query the warehouse in plain English.
-
-## Documentation and Snapshots
-Project artifacts are stored under the `docs` and `dbt` directories:
 
 - **docs/airflow_screenshots** → Airflow DAG runs and orchestration flow:
   

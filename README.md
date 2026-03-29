@@ -32,7 +32,7 @@ graph LR
 
     subgraph "Generate (G)"
         E[(Postgres DB)]
-        F[HTML Table]
+        F[Streamlit Dataframe]
     end
 
     %% Flow Connections

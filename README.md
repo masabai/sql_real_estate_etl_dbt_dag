@@ -7,11 +7,12 @@ End-to-end SQL/dbt ELT pipeline on ~1.1M rows of CT property sales.
 
 **Phase II (dbt):** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
-**Phase III (AI):** AI Reasoning Engine (Text-to-SQL)
-An intelligent interface that allows users to query the clean star-schema using natural language. This is a **Metadata-Injected RAG** pipeline (Retrieval-Augmented Generation) that avoids the "fuzzy" matching of Vector DBs in favor of 100% schema accuracy.
+**Phase III (SQL Query Interface):** Natural language to SQL reasoning engine  
+This phase allows users to query the clean star-schema of property data using plain English or SQL,  
+with built-in auto-repair logic for syntax errors.
 
 ## AI Architecture
-*   **Reasoning Model:** Llama-3.1-8b-instant (via Groq/FastAPI)
+*   **Reasoning Model:** openai/gpt-oss-120b (via Groq)
 *   **RAG Strategy:** Deterministic Context Injection (Schema + SQL Rules)
 *   **Constraints:** Temperature=0 for consistent, executable PostgreSQL generation
 *   **Features:** Automated rounding for aggregates, direct town/property type filtering, and absolute integer counts.
@@ -26,13 +27,13 @@ graph LR
     end
 
     subgraph "Reasoning (A)"
-        C{Llama-3.1 AI}
+        C{gpt-oss-120b}
         D[[Python Logic]]
     end
 
     subgraph "Generate (G)"
         E[(Postgres DB)]
-        F[HTML Table]
+        F[Streamlit UI]
     end
 
     %% Flow Connections
@@ -51,12 +52,6 @@ graph LR
     style F fill:#1DB954,stroke:#191414,stroke-width:2px,color:#fff
 ```
 
-#### *** Python for CSV ingestion, Airflow orchestration, and the AI Reasoning Engine (FastAPI) ***
-
-### Data Source
-CT Office of Policy and Management
-Property sales ≥ $2,000 (2001–2022), covering town, address, sale date, property type, sale/assessed value, and remarks.
-
 
 ### Tech Stack
 
@@ -72,21 +67,12 @@ Property sales ≥ $2,000 (2001–2022), covering town, address, sale date, prop
 
 **Slack:** DAG success/failure alerts
 
-**FastAPI:** High-performance web framework for the AI Reasoning Engine and HTML Results UI.
+**Streamlit:** SQL Query Interface & results visualization UI.
 
-**Llama-3.1:** LLM "Brain" used for deterministic Text-to-SQL translation (Temperature=0).
+**openai/gpt-oss-120b:** LLM model used for deterministic Text-to-SQL translation (Temperature=0).
 
 **Groq:** Fast inference engine to ensure near-zero latency for the RAG pipeline.
 
-### ELT & AI Workflow
-
-**Phase I (Extract, Load, Transform):** Python-based ingestion to Postgres raw schema. 6 sequential SQL scripts for column standardization, profiling, and staging.
-
-**Phase II (Dbt):** star-schema modeling (fact_sales + dimensions). Automated data quality enforcement: uniqueness, relationships, and custom numeric tests.
-
-**Phase III (AI Reasoning):** Metadata-Injected RAG interface using Llama-3.1 that allows non-technical users to query the warehouse in plain English.
-
-- **docs/airflow_screenshots** → Airflow DAG runs and orchestration flow:
   
 ### Figure 1: RealEstate dbt build DAG – Graph View
   - [![Airflow DAG Screenshot](docs/airflow_screenshots/dbt_realestate_dag.png)](docs/airflow_screenshots/dbt_realestate_dag.png)

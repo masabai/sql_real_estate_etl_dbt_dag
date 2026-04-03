@@ -1,6 +1,8 @@
 # WIP Project
-rag/
-rag/rig_extension/
+rag/rag_config.yml
+rag/questions
+rag/workflow
+rag/trian_ia
 # Docker data
 dags/DockerDesktopWSL
 

@@ -1,3 +1,8 @@
+# WIP Project
+rag/rag_config.yml
+rag/questions
+rag/workflow
+rag/trian_ia
 # Docker data
 dags/DockerDesktopWSL
 
@@ -8,7 +13,7 @@ plugins/etl/sql_project.log
 plugins/sql_project.log
 
 # Misc tests
-archive/
+misc/
 
 # Airflow Dag logs
 logs/
@@ -30,11 +35,12 @@ venv_airflow/
 __pycache__/
 
 # Misc file
-project_structure.py
-Real Estate Docker Mounting.txt
-git_notes
+misc/archive/project_structure.py
+misc/Real Estate Docker Mounting.txt
+misc/git_notes
 docker-compose.yml
 # OS-specific
 .DS_Store
 *.pyc
 config.yml
+misc/docker_notes

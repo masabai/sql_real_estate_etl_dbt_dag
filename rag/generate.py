@@ -1,4 +1,4 @@
-from config import client
+from rag.config import client
 
 def generate_sql(question, schema_context):
     """
@@ -20,7 +20,6 @@ CRITICAL NOTES ABOUT THIS DATABASE:
 - Use fact_sales.residential_type_id directly for filtering on residential type (it contains TEXT values, not numeric IDs)
 - Use fact_sales.property_type_id directly (it contains TEXT values, not numeric IDs)
 - Only use foreign keys if they reference tables with meaningful data
-- NO tables exist for: compare_current_previous, price_change, or similar derived tables
 
 CRITICAL DATA RULES:
 - All currency-related columns (sale_amount, sale_price, assessed_value, etc.):
@@ -30,13 +29,10 @@ CRITICAL DATA RULES:
    Example: UPPER(fs.town) = UPPER('Greenwich') or fs.town ILIKE 'Greenwich'.
 - CALCULATED COLUMNS:
    - "Sales Ratio": Use fs.avg_sales_ratio.
-   - "Price Change/Growth": Use clean.compare_current_previous.price_change.
 - AGGREGATES:
    - Use ROUND((SUM(fs.sale_amount))::numeric, 2) for all currency.
    - Use ROUND((AVG(fs.avg_sales_ratio))::numeric, 4) for ratios.
 - RESIDENTIAL FILTER: Use fs.residential_type_id. Values: 'Single Family', 'Condo', 'Two Family', etc.
-- JOINING: Only join clean.compare_current_previous if the user specifically asks about "price change", "next sale", or "previous sale".
-
 
 RULES FOR SQL GENERATION:
 - PostgreSQL syntax only
@@ -55,7 +51,6 @@ RULES FOR SQL GENERATION:
 - DO NOT round or cast COUNT(*) results; return counts as absolute integers without decimals.
 - Highest/most questions should ordered by DESC and use Limit 1 for single result
 - For "Year-over-Year" (YoY) growth, use the CTE pattern provided below.
-- For large currency values, add commas Example: 999,878,112.00
 
 FOR "GROWING FASTEST" OR "YEAR-OVER-YEAR" QUESTIONS:
 - Filter out any town that has a NULL growth percentage
@@ -103,4 +98,3 @@ Generate the SQL (return only the SQL, nothing else):
     sql = sql.rstrip(";").strip()
 
     return sql
-

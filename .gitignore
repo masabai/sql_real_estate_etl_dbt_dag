@@ -1,8 +1,8 @@
 # WIP Project
 rag/rag_config.yml
-rag/questions
-rag/workflow
-rag/trian_ia
+rag/test/questions
+rag/test/workflow
+rag/test
 # Docker data
 dags/DockerDesktopWSL
 

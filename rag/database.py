@@ -1,6 +1,6 @@
 import psycopg2
 import time
-from config import DB_CONFIG
+from rag.config import DB_CONFIG
 
 def connect_db():
     """Establishes connection to Postgres and sets the dbt schema search path."""
@@ -38,7 +38,7 @@ def build_schema_context(cur):
 
     schema_rows = cur.fetchall()
     schema_lines = []
-    current_table = None
+    current_table = None #loop to compare the table_name of the current row to current_table
 
     for table_name, col_name, data_type, key_type in schema_rows:
         if col_name is None: continue
@@ -59,7 +59,7 @@ def execute_sql(conn, sql):
         start = time.time()
         cur.execute(sql)
         rows = cur.fetchall()
-        columns = [c[0] for c in cur.description]#first item = column name
+        columns = [c[0] for c in cur.description]#only column name, not the rest:type_code, display_size, etc
         runtime = time.time() - start
         cur.close()
         return rows, columns, runtime, None

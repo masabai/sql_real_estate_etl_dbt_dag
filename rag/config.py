@@ -1,15 +1,14 @@
 import os
 import yaml
 from groq import Groq
-from openai import OpenAI
 
-# Get the exact path for yml
+# Get the exact path for yml - C:\PythonProject\RealEstate\rag
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Point directly to the YAML file in that same folder
+# Point directly to the YAML file in that same folder -C:\PythonProject\RealEstate\rag\rag_config.yml
 YML_FILE = os.path.join(BASE_DIR, "rag_config.yml")
 
-# Check if it exists (this will now print the FULL path if it fails)
+# Check if it exists
 if not os.path.exists(YML_FILE):
     raise FileNotFoundError(f"Config file '{YML_FILE}' not found! "
                             f"Make sure it is in {BASE_DIR}")

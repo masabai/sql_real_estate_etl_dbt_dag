@@ -8,6 +8,7 @@ End-to-end SQL/dbt ELT pipeline on ~1.1M rows of CT property sales.
 **Phase II (dbt):** dbt models for transformations, fact/dimension tables, automated tests, and documentation.
 
 **Phase III (SQL Query Interface):** Natural language to SQL reasoning engine  
+
 This phase allows users to query the clean star-schema of property data using plain English or SQL,  
 with built-in auto-repair logic for syntax errors.
 
@@ -17,7 +18,11 @@ with built-in auto-repair logic for syntax errors.
 *   **Constraints:** Temperature=0 for consistent, executable PostgreSQL generation
 *   **Features:** Automated rounding for aggregates, direct town/property type filtering, and absolute integer counts.
 
-#### System Architecture
+## QA Coverage
+Verified functionality with 30+ test queries across aggregations, comparisons, time-series, filters,
+and metrics. A quick internal script runs all questions and records any failed queries (empty results or execution errors).
+Sample questions are also included in the Streamlit sidebar for demo purposes.
+
 
 ```mermaid
 graph LR

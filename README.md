@@ -79,6 +79,12 @@ graph LR
 **Groq:** Fast inference engine to ensure near-zero latency for the RAG pipeline.
 
   
+### Figure 1: RealEstate Text-to-SQL Natural Language Qestion
+  - [![Natrual Language Screenshot](docs/rag_screenshots/plain_english_question.png)](docs/rag_screenshots/plain_english_question.png)
+### Figure 2: RealEstate Text-to-SQL Auto Repair SQL syntax
+  - [![Auto repair SQL syntax](docs/rag_screenshots/auto_repair_sql.png)](docs/rag_screenshots/auto_repair_sql.png)
+
+  
 ### Figure 1: RealEstate dbt build DAG – Graph View
   - [![Airflow DAG Screenshot](docs/airflow_screenshots/dbt_realestate_dag.png)](docs/airflow_screenshots/dbt_realestate_dag.png)
 ### Figure 2: RealEstate SQL ETL DAG (Load and Explore Data) - Graph View

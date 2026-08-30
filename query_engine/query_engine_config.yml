@@ -1,0 +1,13 @@
+postgres:
+  host: localhost
+  port: 6543
+  database: airflow
+  user: airflow
+  password: airflow
+  schema: clean
+
+api:
+  groq_key: "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"
+  model: "openai/gpt-oss-120b"
+  #model: "llama-3.1-8b-instant"
+  temperature: 0

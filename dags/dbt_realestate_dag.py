@@ -11,7 +11,7 @@ default_args = {
 
 # Define the DAG
 with DAG(
-    dag_id="dbt_realestate_dag",
+    dag_id="dbt_realestate_dag", 
     default_args=default_args,
     start_date=datetime(2025, 12, 20),
     schedule_interval=None,  # manual trigger only

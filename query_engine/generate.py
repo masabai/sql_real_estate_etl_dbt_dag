@@ -1,4 +1,4 @@
-from rag.config import client
+from query_engine.config import client
 
 def generate_sql(question, schema_context):
     """

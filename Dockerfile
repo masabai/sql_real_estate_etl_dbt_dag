@@ -5,7 +5,7 @@ FROM apache/airflow:2.7.0
 USER airflow 
 
 # Install dbt and Postgres adapter
-RUN pip install --no-cache-dir dbt-core dbt-postgres
+RUN pip install --no-cache-dir dbt-core dbt-postgres pytest==7.4.0
 
 # Switch back to airflow user
 USER airflow

@@ -14,7 +14,7 @@ with built-in auto-repair logic for syntax errors.
 
 ## AI Architecture
 *   **Reasoning Model:** openai/gpt-oss-120b (via Groq)
-*   **RAG Strategy:** Deterministic Context Injection (Schema + SQL Rules)
+*   **Context Strategy:** Deterministic Context Injection (Schema + SQL Rules)
 *   **Constraints:** Temperature=0 for consistent, executable PostgreSQL generation
 *   **Features:** Automated rounding for aggregates, direct town/property type filtering, and absolute integer counts.
 
@@ -80,9 +80,9 @@ graph LR
 
   
 ### Figure 1: RealEstate Text-to-SQL Natural Language Qestion
-  - [![Natrual Language Screenshot](docs/rag_screenshots/plain_english_question.png)](docs/rag_screenshots/plain_english_question.png)
+  - [![Natrual Language Screenshot](docs/query_engine_screenshots/plain_english_question.png)](docs/query_engine_screenshots/plain_english_question.png)
 ### Figure 2: RealEstate Text-to-SQL Auto Repair SQL syntax
-  - [![Auto repair SQL syntax](docs/rag_screenshots/auto_repair_sql.png)](docs/rag_screenshots/auto_repair_sql.png)
+  - [![Auto repair SQL syntax](docs/query_engine_screenshots/auto_repair_sql.png)](docs/query_engine_screenshots/auto_repair_sql.png)
 
   
 ### Figure 1: RealEstate dbt build DAG – Graph View

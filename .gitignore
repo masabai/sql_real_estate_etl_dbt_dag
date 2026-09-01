@@ -29,6 +29,7 @@ dbt/real_estate_dbt/logs/
 
 # local credentials
 dbt/real_estate_dbt/profiles.yml
+query_engine/query_engine_config.yml
 
 # virtual environments
 venv_airflow/

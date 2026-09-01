@@ -3,7 +3,6 @@ version: '3.8'
 services:
   postgres:
     image: postgres:13
-    container_name: airflow_postgres
     restart: always
     environment:
       POSTGRES_USER: airflow
@@ -16,7 +15,6 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin_new
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -28,7 +26,6 @@ services:
 
   airflow-webserver:
     image: airflow:dbt
-    container_name: airflow_webserver
     env_file:
       - ./.env
     user: "${AIRFLOW_UID}:0"
@@ -42,6 +39,7 @@ services:
     volumes:
       - airflow_logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags:cached
+      - ./tests:/opt/airflow/tests:cached 
       - ./plugins:/opt/airflow/plugins:cached
       - ./config.yml:/opt/airflow/config.yml:cached
       - ./dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached
@@ -51,7 +49,6 @@ services:
     command: webserver
   airflow-scheduler:
     image: airflow:dbt
-    container_name: airflow_scheduler
     env_file:
       - ./.env
     user: "${AIRFLOW_UID}:0"
@@ -64,6 +61,7 @@ services:
     volumes:
       - airflow_logs:/opt/airflow/logs
       - ./dags:/opt/airflow/dags:cached
+      - ./tests:/opt/airflow/tests:cached 
       - ./plugins:/opt/airflow/plugins:cached
       - ./config.yml:/opt/airflow/config.yml:cached
       - ./dbt/real_estate_dbt:/opt/airflow/projects/real_estate_dbt:cached

@@ -1,0 +1,52 @@
+
+# Example Questions for Connecticut Real Estate Sales App
+
+# AGGREGATIONS & COUNTS
+"How many towns in the dataset?",
+"How many properties sold in 2020?",
+How many residential properties?
+Total number of sales by property type?
+How many sales happened in each town?
+
+# COMPARISONS & RANKINGS
+Which town is most expensive?
+Which towns are growing fastest?
+Top 10 most expensive towns by average sale price?
+Bottom 5 cheapest towns?
+Which property type has highest average sale price?
+What is the average sale price by property type?
+
+# TIME-BASED ANALYSIS
+How many sales in 2021 vs 2020?
+What year had the most sales?
+Show sales trend from 2020 to 2021?
+What was the average sale price per year?
+Which year had the highest average sale price?
+
+# FILTERING & DRILLING DOWN
+Show all residential properties in Hartford?
+Sales over $500,000 in 2021?
+Properties with assessed value greater than sale price?
+Sales in Greenwich in 2020? only returned sales amount
+How many properties sold in each town?
+
+# METRICS & KPIs
+What is the average sale price by town?
+What is the median property value by year?
+What is the sales count by property type?
+Average sale-to-assessed ratio?
+Which property type sold the most?
+
+# YEAR-OVER-YEAR GROWTH
+Compare 2020 sales to 2021 by town?
+Which towns had the biggest increase in average sale price from 2020 to 2021?
+Show year-over-year growth in number of sales?
+Compare average prices year-over-year?
+
+# COMBINED QUERIES
+Top 5 towns by average sale price in 2020?
+How many residential properties sold in each town in 2021?
+Average sale price by property type for each town?
+Which towns had more than 100 sales in 2001?
+Show towns with highest average assessed value?
+

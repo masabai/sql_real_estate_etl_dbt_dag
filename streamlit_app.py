@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
-from rag.validate import validate_sql
-from rag.generate import generate_sql
-from rag.repair import repair_sql
-from rag.database import connect_db, execute_sql, build_schema_context, log_query
+from query_engine.validate import validate_sql
+from query_engine.generate import generate_sql
+from query_engine.repair import repair_sql
+from query_engine.database import connect_db, execute_sql, build_schema_context, log_query
 
 # Initialize Database connection and Schema Context
 conn = connect_db()

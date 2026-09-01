@@ -1,6 +1,6 @@
 import psycopg2
 import time
-from rag.config import DB_CONFIG
+from query_engine.config import DB_CONFIG
 
 def connect_db():
     """Establishes connection to Postgres and sets the dbt schema search path."""

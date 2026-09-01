@@ -16,7 +16,7 @@ with DAG(
     dag_id="load_explore_dag",
     default_args=default_args,
     start_date=datetime(2025, 12, 20),
-    schedule_interval=None,  # manual trigger only
+    schedule=None,  # manual trigger only
 ) as dag:
 
     # Task: Load CSV data into Postgres
@@ -47,7 +47,7 @@ with DAG(
         sql_task = BashOperator(
             task_id=task_id,
             bash_command=(
-                f"PGPASSWORD=airflow psql -h airflow_postgres -U airflow -d airflow "
+                f"PGPASSWORD=airflow psql -v ON_ERROR_STOP=1 -h postgres -U airflow -d airflow "
                 f"-f /opt/airflow/projects/sql_project/{script}"
             ),
         )

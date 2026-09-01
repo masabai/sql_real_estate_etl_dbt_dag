@@ -6,7 +6,7 @@ from groq import Groq
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Point directly to the YAML file in that same folder -C:\PythonProject\RealEstate\rag\rag_config.yml
-YML_FILE = os.path.join(BASE_DIR, "rag_config.yml")
+YML_FILE = os.path.join(BASE_DIR, "query_engine_config.yml")
 
 # Check if it exists
 if not os.path.exists(YML_FILE):
@@ -23,6 +23,6 @@ API_CONFIG = cfg.get("api", {})
 # Initialize Groq client
 GROQ_API_KEY = API_CONFIG.get("groq_key")
 if not GROQ_API_KEY:
-    raise ValueError("GROQ_API_KEY is missing from rag_config.yml!")
+    raise ValueError("GROQ_API_KEY is missing from query_engine_config.yml!")
 
 client = Groq(api_key=GROQ_API_KEY)

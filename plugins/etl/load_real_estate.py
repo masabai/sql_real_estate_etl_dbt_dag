@@ -210,7 +210,8 @@ def load_to_staging(engine, csv_file=RAW_CSV, table_name=TABLE_NAME, chunk_size=
     full_table_name = f"staging.{table_name}"
 
     # 1. Initialize schema using a 0-row dataframe
-    first_chunk = next(pd.read_csv(csv_file, nrows=1))
+    #first_chunk = next(pd.read_csv(csv_file, nrows=1))
+    first_chunk = pd.read_csv(csv_file, nrows=1)
     first_chunk.columns = first_chunk.columns.str.strip().str.replace(" ", "_")
 
     with engine.begin() as conn:
@@ -283,4 +284,3 @@ def main():
     except Exception as e:
         logging.error(f"Pipeline failed: {e}")
         print("Pipeline failed. Check logs.")
-

@@ -1,0 +1,6 @@
+streamlit_app-> (connect_db, build_schema, validate_sql, execute_sql, generate_sql,repair_sql, log_sql, app)
+config -> rag_config.yml (DB_CONFIG, API_CONFIG)
+database -> (connect_db, build_schema, execute_sql, log_query, create_log_table)
+validate ->  blocked = ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"], select, with  -> can not validate NL here
+generate -> (generate_sql)
+repair -> (repair_sql)
